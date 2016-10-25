@@ -1,0 +1,9 @@
+<button type="text" ng-click="loadMovies()">Load</button>
+<ul>
+    <li class="movie" ng-repeat="movie in movies">
+        <img src="{{movie.Poster}}" />
+        <p>
+            {{movie.Title}}
+        </p>
+    </li>
+</ul>

@@ -1,0 +1,9 @@
+<button type="text" ng-click="loadUsers()">Load</button>
+<ul>
+    <li class="user" ng-repeat="user in users">
+        <img src="images/user.png" />
+        <p>
+            {{user.name}}-{{user.id}}
+        </p>
+    </li>
+</ul>

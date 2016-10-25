@@ -1,0 +1,133 @@
+.site-warp {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    background: #F1F2F1;
+}
+
+.sideLeft {
+    position: fixed;
+    height: 100%;
+    width: 220px;
+    background: #252525;
+    z-index: 999;
+    top: 0;
+    left: 0;
+}
+
+.main {
+    padding-left: 220px;
+}
+
+body {
+    background-color: transparent;
+    color: #000;
+}
+
+h1 {
+    margin: 0;
+}
+
+p {
+    margin: 0;
+    text-overflow:ellipsis;
+}
+
+a {
+    text-decoration: none!important;
+    color: #F38B72;
+    transition: all 225ms ease;
+}
+
+.logo {
+    padding-bottom: 10px;
+    padding-top: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+    transition: .3s ease all;
+}
+
+.logo:hover {
+    background: #111;
+}
+
+.logo img {
+    width: 170px;
+    margin: 0 auto;
+}
+
+.list-unstyled {
+    list-style: none;
+}
+
+li.divider {
+    color: #999;
+    text-transform: uppercase;
+    display: block;
+    padding: 30px 30px 8px;
+    font-size: 13px;
+    letter-spacing: 1.1px;
+}
+
+li {
+    font-size: 25px;
+}
+
+.list-unstyled {
+    list-style: none;
+    padding: 10px;
+}
+
+.link a {
+    display: block;
+    padding-left: 30px;
+    margin: 5px;
+}
+
+.link a:hover {
+    font-size: 35px;
+    color: #FFF;
+    background: #ef3e6b;
+}
+
+.user {
+    color: #000;
+    background: #ffffff;
+	display: inline-block;
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 10px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-transition: box-shadow 0.5s ease;
+    -moz-transition: box-shadow 0.5s ease;
+    -o-transition: box-shadow 0.5s ease;
+    -ms-transition: box-shadow 0.5s ease;
+    transition: box-shadow 0.5s ease;
+
+    transition: 1s linear all;
+    -webkit-transition: 1s linear all;
+}
+
+
+.movie {
+    color: #000;
+    background: #ffffff;
+	display: inline-block;
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 10px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-transition: box-shadow 0.5s ease;
+    -moz-transition: box-shadow 0.5s ease;
+    -o-transition: box-shadow 0.5s ease;
+    -ms-transition: box-shadow 0.5s ease;
+    transition: box-shadow 0.5s ease;
+
+    transition: 1s linear all;
+    -webkit-transition: 1s linear all;
+    max-width: 330px;
+}

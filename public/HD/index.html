@@ -1,0 +1,59 @@
+<!doctype html>
+<html ng-app="docsApp" lang="vi">
+<head>
+    <title>Vé điện tử</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/darkly/bootstrap.min.css">
+    <!-- <link rel="icon" type="image/x-icon" href="favicon.ico" /> -->
+    <meta charset="UTF-8" name="viewport" content="initial-scale=1"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body ng-controller="mainController">
+    <div class="site-warp">
+        <div class="sideLeft">
+            <div class="logo">
+                <a href="/">
+                    <img src="images/logo.png" class="img-responsive">
+                    <h1>sticket.io</h1>
+                    <p>Vé điện tử</p>
+                </a>
+            </div>
+            <nav class="link">
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="#movies" ng-click="loadMovies()">Movies</a>
+                    </li>
+                    <li>
+                        <a href="#users" ng-click="loadUsers()">Users</a>
+                    </li>
+                    <li>
+                        <a href="#adduser">Add User</a>
+                    </li>
+                    <li>
+                        <a href="#addmovie">Add Movie</a>
+                    </li>
+                    <li>
+                        <a href="#signin">Sign In</a>
+                    </li>
+                    <li>
+                        <a href="#signup">Sign Up</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main">
+            <div ng-view></div>
+        </div>
+    </div>
+    <!-- Preload is (currently) only used for testing jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+    <script src="javascripts/app.js"></script>
+</body>
+</html>
