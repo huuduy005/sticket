@@ -30,10 +30,10 @@ app.config(function($routeProvider) {
         });
 });
 
-app.controller('mainController', function($scope, $https) {
+app.controller('mainController', function($scope, $http) {
     $scope.signin = function() {
         console.log($scope.user);
-        $https({
+        $http({
             method: 'POST',
             url: baseURL + '/authenticate',
             data: {
@@ -50,7 +50,7 @@ app.controller('mainController', function($scope, $https) {
 
     $scope.signup = function() {
         console.log($scope.user);
-        $https({
+        $http({
             method: 'POST',
             url: baseURL + '/signup',
             data: {
@@ -67,7 +67,7 @@ app.controller('mainController', function($scope, $https) {
     }
 
     $scope.loadUsers = function() {
-        $https({
+        $http({
             method: 'GET',
             url: baseURL + '/users?token=' + token,
         }).then(function(response) {
@@ -79,7 +79,7 @@ app.controller('mainController', function($scope, $https) {
     }
 
     $scope.loadMovies = function() {
-        $https({
+        $http({
             method: 'GET',
             url: baseURL + '/movies?token=' + token,
         }).then(function(response) {
