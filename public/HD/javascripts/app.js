@@ -1,5 +1,5 @@
 var app = angular.module('docsApp', ['ngMaterial', 'ngAnimate', 'ngRoute', 'ngAria']);
-
+var baseURL = window.location.origin;
 var token =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIkX18iOnsic3RyaWN0TW9kZSI6dHJ1ZSwiZ2V0dGVycyI6e30sIndhc1BvcHVsYXRlZCI6ZmFsc2UsImFjdGl2ZVBhdGhzIjp7InBhdGhzIjp7Il9fdiI6ImluaXQiLCJhZG1pbiI6ImluaXQiLCJuYW1lIjoiaW5pdCIsImlkIjoiaW5pdCIsIl9pZCI6ImluaXQifSwic3RhdGVzIjp7Imlnbm9yZSI6e30sImRlZmF1bHQiOnt9LCJpbml0Ijp7Il9fdiI6dHJ1ZSwiYWRtaW4iOnRydWUsIm5hbWUiOnRydWUsImlkIjp0cnVlLCJfaWQiOnRydWV9LCJtb2RpZnkiOnt9LCJyZXF1aXJlIjp7fX0sInN0YXRlTmFtZXMiOlsicmVxdWlyZSIsIm1vZGlmeSIsImluaXQiLCJkZWZhdWx0IiwiaWdub3JlIl19LCJlbWl0dGVyIjp7ImRvbWFpbiI6bnVsbCwiX2V2ZW50cyI6e30sIl9ldmVudHNDb3VudCI6MCwiX21heExpc3RlbmVycyI6MH19LCJpc05ldyI6ZmFsc2UsIl9kb2MiOnsiX192IjowLCJhZG1pbiI6ZmFsc2UsIm5hbWUiOiJI4buvdSBEdXkiLCJpZCI6MTY3NzUxMTEzNSwiX2lkIjoiNTgwZGU4MWMzMGY5ZGQwNzRjNTk0YjVlIn0sIl9wcmVzIjp7IiRfX29yaWdpbmFsX3NhdmUiOltudWxsLG51bGxdLCIkX19vcmlnaW5hbF92YWxpZGF0ZSI6W251bGxdLCIkX19vcmlnaW5hbF9yZW1vdmUiOltudWxsXX0sIl9wb3N0cyI6eyIkX19vcmlnaW5hbF9zYXZlIjpbXSwiJF9fb3JpZ2luYWxfdmFsaWRhdGUiOltdLCIkX19vcmlnaW5hbF9yZW1vdmUiOltdfSwiaWF0IjoxNDc3NDAxMTc3LCJleHAiOjE0Nzc0ODc1Nzd9.fgCfX6ofCkkt3aWslvj2nnve4IuzfUDCQdPMwAFiQrY';
 
@@ -30,12 +30,12 @@ app.config(function($routeProvider) {
         });
 });
 
-app.controller('mainController', function($scope, $http) {
+app.controller('mainController', function($scope, $https) {
     $scope.signin = function() {
         console.log($scope.user);
-        $http({
+        $https({
             method: 'POST',
-            url: 'http://localhost:3000/authenticate',
+            url: baseURL + '/authenticate',
             data: {
                 name: $scope.user.name,
                 password: $scope.user.password
@@ -50,9 +50,9 @@ app.controller('mainController', function($scope, $http) {
 
     $scope.signup = function() {
         console.log($scope.user);
-        $http({
+        $https({
             method: 'POST',
-            url: 'http://localhost:3000/signup',
+            url: baseURL + '/signup',
             data: {
                 id: $scope.user.id,
                 name: $scope.user.name,
@@ -67,9 +67,9 @@ app.controller('mainController', function($scope, $http) {
     }
 
     $scope.loadUsers = function() {
-        $http({
+        $https({
             method: 'GET',
-            url: 'http://localhost:3000/users?token=' + token,
+            url: baseURL + '/users?token=' + token,
         }).then(function(response) {
             console.log(response);
             $scope.users = response.data;
@@ -79,9 +79,9 @@ app.controller('mainController', function($scope, $http) {
     }
 
     $scope.loadMovies = function() {
-        $http({
+        $https({
             method: 'GET',
-            url: 'http://localhost:3000/movies?token=' + token,
+            url: baseURL + '/movies?token=' + token,
         }).then(function(response) {
             console.log(response);
             $scope.movies = response.data;
