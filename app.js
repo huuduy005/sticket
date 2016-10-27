@@ -13,6 +13,7 @@ var users = require('./routes/users');
 var movies = require('./routes/movies');
 var crawler = require('./routes/crawler');
 var signup = require('./routes/signup');
+var facebook = require('.routes/facebook');
 
 /*Kết nối database*/
 // load mongoose package
@@ -42,13 +43,16 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Routes public
 app.use('/', routes);
 app.use('/signup', signup);
+app.use('/webhook', facebook);
 
 //Routes cần được bảo vệ
 app.set('superSecret', config.secret);
@@ -62,12 +66,18 @@ apiRoutes.post('/authenticate', function (req, res) {
     }, function (err, user) {
         if (err) throw err;
         if (!user) {
-            res.json({success: false, message: 'Authentication failed. User not found.'});
+            res.json({
+                success: false,
+                message: 'Authentication failed. User not found.'
+            });
         } else if (user) {
             // check if password matches
             if (user.password != req.body.password) {
                 console.log(user.password);
-                res.json({success: false, message: 'Authentication failed. Wrong password.'});
+                res.json({
+                    success: false,
+                    message: 'Authentication failed. Wrong password.'
+                });
             } else {
                 // if user is found and password is right
                 // create a token
@@ -95,7 +105,10 @@ apiRoutes.use(function (req, res, next) {
         // verifies secret and checks exp
         jwt.verify(token, app.get('superSecret'), function (err, decoded) {
             if (err) {
-                return res.json({success: false, message: 'Failed to authenticate token.'});
+                return res.json({
+                    success: false,
+                    message: 'Failed to authenticate token.'
+                });
             } else {
                 // if everything is good, save to request for use in other routes
                 console.log(decoded);
