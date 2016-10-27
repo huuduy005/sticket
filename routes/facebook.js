@@ -1,4 +1,5 @@
 var express = require('express');
+var request = require('request');
 var router = express.Router();
 
 var maxacminh = 'hulo005';
@@ -10,28 +11,52 @@ router.get('/', function (req, res, next) {
     res.send('Error, wrong validation token');
 });
 
-var mess;
-router.get('/mess', function (req, res, next){
+var mess = '';
+router.get('/mess', function (req, res, next) {
     res.send(mess);
+});
+
+router.post('/mess', function (req, res, next) {
+    console.log(req.body);
+    var entries = req.body.entry;
+    for (var entry of entries) {
+        var messaging = entry.messaging;
+        for (var message of messaging) {
+            var senderId = message.sender.id;
+            console.log(senderId);
+            if (message.message) {
+                // If user send text
+                if (message.message.text) {
+                    var text = message.message.text;
+                    console.log(text); // In tin nhắn người dùng
+                    // sendMessage(senderId, "Tui là bot đây: " + text);
+                }
+            }
+        }
+    }
+   res.status(200).send('OK');
 });
 
 router.post('/', function (req, res, next) {
     var entries = req.body.entry;
-    mess = entries;
-    // for (var entry of entries) {
-    //     var messaging = entry.messaging;
-    //     for (var message of messaging) {
-    //         var senderId = message.sender.id;
-    //         if (message.message) {
-    //             // If user send text
-    //             if (message.message.text) {
-    //                 var text = message.message.text;
-    //                 console.log(text); // In tin nhắn người dùng
-    //                 sendMessage(senderId, "Tui là bot đây: " + text);
-    //             }
-    //         }
-    //     }
-    // }
+    for (var entry of entries) {
+        var messaging = entry.messaging;
+        for (var message of messaging) {
+            var senderId = message.sender.id;
+            mess += '\n';
+            mess += senderId;
+            if (message.message) {
+                // If user send text
+                if (message.message.text) {
+                    var text = message.message.text;
+                    mess += ' - ';
+                    mess += text;
+                    console.log(text); // In tin nhắn người dùng
+                    sendMessage(senderId, "Tui là bot đây: " + text);
+                }
+            }
+        }
+    }
 
     res.status(200).send("OK");
 });
@@ -52,5 +77,6 @@ function sendMessage(senderId, message) {
             },
         }
     });
+    mess += 'đã gửi\n';
 }
 module.exports = router;
