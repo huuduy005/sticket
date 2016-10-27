@@ -24,11 +24,12 @@ router.get('/mess', function (req, res, next) {
 
 router.get('/simi', function (req, res, next) {
     var text = 'ánh trăng nơi màn đêm';
-    var URI = 'http://sandbox.api.simsimi.com/request.p?key=2af6eebe-bccc-4bc2-b067-cf496b49ffea&lc=vn&ft=1.0&text=' + text;
+    var URI = 'http://simsimi.com/getRealtimeReq?uuid=' + uid + '&lc=vi&ft=1&reqText=' + text + '&status=W';
     URI = encodeURI(URI);
     console.log(URI);
     request({
-        url: URI
+        url: URI,
+        jar: mCookies
     }, function (err, resp, body) {
         var data = JSON.parse(body);
         var mess = data.response;
@@ -97,16 +98,46 @@ function autoSend(senderId) {
         sendMessage(senderId, 'Tui tự gửi cho bạn lần thứ: ' + count++);
 }
 
+var mCookies = request.jar();
+var uid = '';
+
+function getCookie() {
+    request({
+        url: 'http://simsimi.com/storygame/main',
+        jar: mCookies
+    }, function (err, res, body) {
+        console.log(mCookies);
+        console.log(mCookies.getCookies());
+        request({
+            url: 'http://simsimi.com/getUUID',
+            jar: mCookies
+        }, function (err, res, body) {
+            var data = JSON.parse(body);
+            uid = data.uuid;
+            console.log(body);
+            console.log(mCookies);
+            console.log(mCookies.getCookies());
+        });
+    });
+}
+
+getCookie();
+
 function sendMessBySimi(senderId, text) {
-    var URI = 'http://sandbox.api.simsimi.com/request.p?key=2af6eebe-bccc-4bc2-b067-cf496b49ffea&lc=vn&ft=1.0&text=' + text;
+    var URI = 'http://simsimi.com/getRealtimeReq?uuid=' + uid + '&lc=vi&ft=1&reqText=' + text + '&status=W';
     URI = encodeURI(URI);
     request({
-        url: URI
+        url: URI,
+        jar: mCookies
     }, function (err, res, body) {
         var data = JSON.parse(body);
-        var mess = data.response;
-        console.log(mess);
-        sendMessage(senderId, mess);
+        if (data.status === 200) {
+            var mess = data.respSentence;
+            console.log(mess);
+            sendMessage(senderId, mess);
+        } else {
+            getCookie();
+        }
     });
 }
 function sendMessage(senderId, message) {
