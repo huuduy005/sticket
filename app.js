@@ -13,7 +13,7 @@ var users = require('./routes/users');
 var movies = require('./routes/movies');
 var crawler = require('./routes/crawler');
 var signup = require('./routes/signup');
-var facebook = require('.routes/facebook');
+var facebook = require('./routes/facebook');
 
 /*Kết nối database*/
 // load mongoose package
