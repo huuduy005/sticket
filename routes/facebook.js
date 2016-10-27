@@ -10,22 +10,28 @@ router.get('/', function (req, res, next) {
     res.send('Error, wrong validation token');
 });
 
+var mess;
+router.get('/mess', function (req, res, next){
+    res.send(mess);
+});
+
 router.post('/', function (req, res, next) {
     var entries = req.body.entry;
-    for (var entry of entries) {
-        var messaging = entry.messaging;
-        for (var message of messaging) {
-            var senderId = message.sender.id;
-            if (message.message) {
-                // If user send text
-                if (message.message.text) {
-                    var text = message.message.text;
-                    console.log(text); // In tin nhắn người dùng
-                    sendMessage(senderId, "Tui là bot đây: " + text);
-                }
-            }
-        }
-    }
+    mess = entries;
+    // for (var entry of entries) {
+    //     var messaging = entry.messaging;
+    //     for (var message of messaging) {
+    //         var senderId = message.sender.id;
+    //         if (message.message) {
+    //             // If user send text
+    //             if (message.message.text) {
+    //                 var text = message.message.text;
+    //                 console.log(text); // In tin nhắn người dùng
+    //                 sendMessage(senderId, "Tui là bot đây: " + text);
+    //             }
+    //         }
+    //     }
+    // }
 
     res.status(200).send("OK");
 });
