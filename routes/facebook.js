@@ -22,6 +22,23 @@ router.get('/mess', function (req, res, next) {
     res.send(mess);
 });
 
+router.get('/simi', function (req, res, next) {
+    var text = 'ánh trăng nơi màn đêm';
+    var URI = 'http://sandbox.api.simsimi.com/request.p?key=2af6eebe-bccc-4bc2-b067-cf496b49ffea&lc=vn&ft=1.0&text=' + text;
+    URI = encodeURI(URI);
+    console.log(URI);
+    request({
+        url: URI
+    }, function (err, resp, body) {
+        var data = JSON.parse(body);
+        var mess = data.response;
+        console.log(body);
+        console.log(mess);
+        res.send(body);
+    });
+});
+
+
 router.post('/mess', function (req, res, next) {
     console.log(req.body);
     var entries = req.body.entry;
@@ -81,13 +98,14 @@ function autoSend(senderId) {
 }
 
 function sendMessBySimi(senderId, text) {
-    var uri = 'http://sandbox.api.simsimi.com/request.p?key=2af6eebe-bccc-4bc2-b067-cf496b49ffea&lc=vn&ft=1.0&text=' + text;
-    uri = encodeURI(uri);
+    var URI = 'http://sandbox.api.simsimi.com/request.p?key=2af6eebe-bccc-4bc2-b067-cf496b49ffea&lc=vn&ft=1.0&text=' + text;
+    URI = encodeURI(URI);
     request({
-        uri: uri
-    },function (err, response, body) {
-        var mess = body.response;
-        console.log('mess');
+        url: URI
+    }, function (err, res, body) {
+        var data = JSON.parse(body);
+        var mess = data.response;
+        console.log(mess);
         sendMessage(senderId, mess);
     });
 }
