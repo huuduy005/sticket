@@ -53,6 +53,9 @@ router.post('/', function (req, res, next) {
                     mess += text;
                     console.log(text); // In tin nhắn người dùng
                     sendMessage(senderId, "Tui là bot đây: " + text);
+                    myVar = setInterval(function () {
+                        autoSend(senderId);
+                    }, 5000);
                 }
             }
         }
@@ -60,6 +63,14 @@ router.post('/', function (req, res, next) {
 
     res.status(200).send("OK");
 });
+
+var myVar;
+var count = 0;
+function autoSend(senderId) {
+    if (count>10)
+        clearInterval(myVar);
+    sendMessage(senderId, 'Tui tự gửi cho bạn lần thứ: ' + count++);
+}
 
 function sendMessage(senderId, message) {
     request({
