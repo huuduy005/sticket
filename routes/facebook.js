@@ -1,6 +1,7 @@
 var express = require('express');
 var request = require('request');
 var router = express.Router();
+var Tiki = require('./util/tiki');
 
 var maxacminh = 'hulo005';
 /* GET users listing. */
@@ -9,6 +10,11 @@ router.get('/', function (req, res, next) {
         res.send(req.query['hub.challenge']);
     }
     res.send('Error, wrong validation token');
+});
+
+router.get('/tiki', function (req, res, next) {
+    var r = Tiki.check('https://tiki.vn/may-anh-canon-700d-va-lens-18-55-stm-p114593.html');
+    res.send(r);
 });
 
 var mess = '';
@@ -52,10 +58,11 @@ router.post('/', function (req, res, next) {
                     mess += ' - ';
                     mess += text;
                     console.log(text); // In tin nhắn người dùng
-                    sendMessage(senderId, "Tui là bot đây: " + text);
-                    myVar = setInterval(function () {
-                        autoSend(senderId);
-                    }, 5000);
+                    sendMessBySimi(senderId, text);
+                    // sendMessage(senderId, "Tui là bot đây: " + text);
+                    // myVar = setInterval(function () {
+                    //     autoSend(senderId);
+                    // }, 5000);
                 }
             }
         }
@@ -73,6 +80,17 @@ function autoSend(senderId) {
         sendMessage(senderId, 'Tui tự gửi cho bạn lần thứ: ' + count++);
 }
 
+function sendMessBySimi(senderId, text) {
+    var uri = 'http://sandbox.api.simsimi.com/request.p?key=2af6eebe-bccc-4bc2-b067-cf496b49ffea&lc=vn&ft=1.0&text=' + text;
+    uri = encodeURI(uri);
+    request({
+        uri: uri
+    },function (err, response, body) {
+        var mess = body.response;
+        console.log('mess');
+        sendMessage(senderId, mess);
+    });
+}
 function sendMessage(senderId, message) {
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
