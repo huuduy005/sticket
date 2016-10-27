@@ -34,7 +34,7 @@ router.post('/mess', function (req, res, next) {
             }
         }
     }
-   res.status(200).send('OK');
+    res.status(200).send('OK');
 });
 
 router.post('/', function (req, res, next) {
@@ -67,9 +67,10 @@ router.post('/', function (req, res, next) {
 var myVar;
 var count = 0;
 function autoSend(senderId) {
-    if (count>10)
+    if (count > 10)
         clearInterval(myVar);
-    sendMessage(senderId, 'Tui tự gửi cho bạn lần thứ: ' + count++);
+    else
+        sendMessage(senderId, 'Tui tự gửi cho bạn lần thứ: ' + count++);
 }
 
 function sendMessage(senderId, message) {

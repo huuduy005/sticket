@@ -39,8 +39,8 @@
       <file leaf-file-name="facebook.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/facebook.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="343">
-              <caret line="68" column="26" selection-start-line="68" selection-start-column="26" selection-end-line="68" selection-end-column="26" />
+            <state relative-caret-position="292">
+              <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -379,7 +379,7 @@
       <workItem from="1476768945795" duration="9730000" />
       <workItem from="1477241660632" duration="3970000" />
       <workItem from="1477300379975" duration="14976000" />
-      <workItem from="1477548009526" duration="4129000" />
+      <workItem from="1477548009526" duration="4295000" />
     </task>
     <task id="LOCAL-00001" summary="afsafsdf">
       <created>1477548446064</created>
@@ -416,11 +416,18 @@
       <option name="project" value="LOCAL" />
       <updated>1477551215611</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="simple code to auto send mess">
+      <created>1477552221187</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1477552221187</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32805000" />
+    <option name="totallyTimeSpent" value="32971000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -461,7 +468,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="afsafsdf" />
     <MESSAGE value="simple code to reply" />
-    <option name="LAST_COMMIT_MESSAGE" value="simple code to reply" />
+    <MESSAGE value="simple code to auto send mess" />
+    <option name="LAST_COMMIT_MESSAGE" value="simple code to auto send mess" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -758,8 +766,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/facebook.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="68" column="26" selection-start-line="68" selection-start-column="26" selection-end-line="68" selection-end-column="26" />
+        <state relative-caret-position="292">
+          <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
           <folding />
         </state>
       </provider>
