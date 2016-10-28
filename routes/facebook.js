@@ -136,6 +136,7 @@ function sendMessBySimi(senderId, text) {
             console.log(mess);
             sendMessage(senderId, mess);
         } else {
+            sendMessage(senderId, 'Xin lỗi mình không câu nói của bạn!!! :)');
             getCookie();
         }
     });
