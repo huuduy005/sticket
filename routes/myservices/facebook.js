@@ -111,6 +111,7 @@ function sendMessage(senderId, message) {
 
 function sendBusAround(senderId, lat, long) {
     var URL = 'http://apicms.ebms.vn/businfo/getstopsinbounds/' + (long - 0.0025) + '/' + (lat - 0.0025 ) + '/' + (long + 0.0025) + '/' + (lat + 0.0025);
+    URLBus.push(URL);
     console.log(URL);
     request({
         url: URL,
@@ -135,7 +136,10 @@ function sendBusAround(senderId, lat, long) {
                 title: 'Trạm dừng ' + stop.Name,
                 item_url: 'https://sticket.herokuapp.com',
                 image_url: 'https://www.ticketdesign.com/wp-content/uploads/2014/05/ticket-logo-.003.jpg',
-                subtitle: 'Địa bàn: ' + stop.Zone + '\nTuyến: ' + stop.Routes,
+                subtitle: 'Địa bàn: ' + stop.Zone
+                + '\nTuyến: ' + stop.Routes
+                + '\nCách bạn: ' + getDistanceFromLatLonInKm(lat, long, stop.Lat, stop.Lng).toFixed(2) + ' (Km)'
+                + '\nĐường: ' + stop.Street,
                 buttons: [
                     {
                         type: "web_url",
@@ -166,6 +170,11 @@ function sendBusAround(senderId, lat, long) {
         // sendMessage(senderId,'Các trạm dừng gần bạn');
     });
 }
+
+var URLBus =[];
+router.get('busURL', function (req, res) {
+   res.send(URLBus);
+});
 
 router.get('/bus', function (req, res) {
     sendBusAround(123213, 10.756455759090029, 106.68196452856064);
