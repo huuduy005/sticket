@@ -2,13 +2,11 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 // TODO cần bổ sung thêm các trường thông tin
-var userSchema = new Schema({
+var eventSchema = new Schema({
     id: Number,
-    password: String,
-    name: String,
     information: String,
-    admin: Boolean
+    type: String
 });
 
-var Users = mongoose.model('Users', userSchema);
-module.exports = Users;
+var Events = mongoose.model('Events', eventSchema);
+module.exports = Events;

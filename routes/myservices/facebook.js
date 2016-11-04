@@ -1,7 +1,7 @@
 var express = require('express');
 var request = require('request');
 var router = express.Router();
-var Tiki = require('./util/tiki');
+var Tiki = require('./../util/tiki');
 
 var maxacminh = 'hulo005';
 /* GET users listing. */
@@ -121,7 +121,7 @@ function getCookie() {
     });
 }
 
-getCookie();
+// getCookie();
 
 function sendMessBySimi(senderId, text) {
     var URI = 'http://simsimi.com/getRealtimeReq?uuid=' + uid + '&lc=vi&ft=1&reqText=' + text + '&status=W';
