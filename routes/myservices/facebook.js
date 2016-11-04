@@ -27,10 +27,13 @@ router.post('/', function (req, res) {
                     sendMessBySimi(senderId, text);
                 }
                 if (message.attachments) {
-                    if (message.attachments.type === 'location') {
-                        var lat = message.attachments.coordinates.lat;
-                        var long = message.attachments.coordinates.long;
-                        sendMessage(senderId, 'Vị trí của bạn (' + lat + ', ' + long + ')');
+                    var attachments = message.attachments;
+                    for (var attachment of attachments){
+                        if (attachment.type === 'location') {
+                            var lat = attachment.payload.coordinates.lat;
+                            var long = attachment.payload.coordinates.long;
+                            sendMessage(senderId, 'Vị trí của bạn (' + lat + ', ' + long + ')');
+                        }
                     }
                 }
             }
