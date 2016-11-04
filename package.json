@@ -15,9 +15,9 @@
     "form-data": "^2.1.1",
     "jade": "~1.11.0",
     "jsonwebtoken": "^7.1.9",
-    "mongoose": "^4.6.5",
+    "mongoose": "^4.6.6",
     "morgan": "~1.7.0",
-    "request": "^2.76.0",
+    "request": "^2.78.0",
     "serve-favicon": "~2.3.0"
   }
 }
