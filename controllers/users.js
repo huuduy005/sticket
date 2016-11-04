@@ -5,7 +5,7 @@ var secret = config.secret;
 
 var UsersController = {};
 
-UsersController.getAll = function (req, res, next) {
+UsersController.getAll = function (req, res) {
     Users.find({}, function (err, users) {
         if (err) throw err;
         console.log(users);
@@ -13,7 +13,7 @@ UsersController.getAll = function (req, res, next) {
     });
 };
 
-UsersController.signup = function (req, res, next) {
+UsersController.signup = function (req, res) {
     console.log(req.body);
     Users.findOne({
         id: req.body.id
@@ -40,7 +40,7 @@ UsersController.signup = function (req, res, next) {
     });
 };
 
-UsersController.signin = function (req, res, next) {
+UsersController.signin = function (req, res) {
     console.log(req.body);
     Users.findOne({
         id: req.body.id

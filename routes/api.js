@@ -16,15 +16,10 @@ var booking = require('./api/booking');
 var logout = require('./api/logout');
 
 router.get('/events', EventsController.getAll);
-
 router.get('/devices', DevicesController.getAll);
-
 router.get('/tickets', TicketsController.getAll);
-
 router.get('/users', UsersController.getAll);
-
 router.post('/sign-up', UsersController.signup);
-
 router.post('/sign-in', UsersController.signin);
 
 router.post('/authenticate', function (req, res) {
@@ -88,9 +83,5 @@ router.use(function (req, res, next) {
         });
     }
 });
-
-router.use('/booking', booking);
-
-router.use('/logout', logout);
 
 module.exports = router;

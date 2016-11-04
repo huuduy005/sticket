@@ -6,12 +6,12 @@ var portal = require('./myservices/portal');
 var crawler = require('./myservices/crawler');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Express' });
+router.get('/', function(req, res) {
+    res.render('index', { title: 'Services' });
 });
 
 router.use('/webhook', facebook);
 router.use('/portal', portal);
-router.use('/crawler', crawler);
+// router.use('/crawler', crawler);
 
 module.exports = router;
