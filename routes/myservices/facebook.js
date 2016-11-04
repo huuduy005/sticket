@@ -26,6 +26,13 @@ router.post('/', function (req, res) {
                     var text = message.message.text;
                     sendMessBySimi(senderId, text);
                 }
+                if (message.attachments) {
+                    if (message.attachments.type === 'location') {
+                        var lat = message.attachments.coordinates.lat;
+                        var long = message.attachments.coordinates.long;
+                        sendMessage(senderId, 'Vị trí của bạn (' + lat + ', ' + long + ')');
+                    }
+                }
             }
         }
     }
