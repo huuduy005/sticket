@@ -117,63 +117,65 @@ function sendBusAround(senderId, lat, long) {
         url: URL,
         json: true
     }, function (err, res, body) {
-        var data = {
-            recipient: {
-                id: senderId
-            },
-            message: {
-                attachment: {
-                    type: "template",
-                    payload: {
-                        template_type: "generic"
+        if (body.length === 0) {
+            sendMessage(senderId, 'Không tìm thấy trạm xe bus gần bạn!\nBot chỉ có thể tìm các tuyến trong TP.HCM');
+        } else {
+            var data = {
+                recipient: {
+                    id: senderId
+                },
+                message: {
+                    attachment: {
+                        type: "template",
+                        payload: {
+                            template_type: "generic"
+                        }
                     }
                 }
-            }
-        };
-        var ele = [];
-        for (var stop of body) {
-            var info = {
-                title: 'Trạm dừng ' + stop.Name,
-                item_url: 'https://sticket.herokuapp.com',
-                image_url: 'https://www.ticketdesign.com/wp-content/uploads/2014/05/ticket-logo-.003.jpg',
-                subtitle: 'Địa bàn: ' + stop.Zone
-                + '\nTuyến: ' + stop.Routes
-                + '\nCách bạn: ' + getDistanceFromLatLonInKm(lat, long, stop.Lat, stop.Lng).toFixed(2) + ' (Km)'
-                + '\nĐường: ' + stop.Street,
-                buttons: [
-                    {
-                        type: "web_url",
-                        url: "https://sticket.herokuapp.com",
-                        title: "View Website"
-                    }
-                ]
             };
-            ele.push(info);
-        }
-        data.message.attachment.payload.elements = ele;
-        console.log(data);
-        fs.writeFile("./fb.json", JSON.stringify(data), function (err) {
-            if (err) {
-                return console.log(err);
+            var ele = [];
+            for (var stop of body) {
+                var info = {
+                    title: 'Trạm dừng ' + stop.Name,
+                    item_url: 'https://sticket.herokuapp.com',
+                    image_url: 'https://www.ticketdesign.com/wp-content/uploads/2014/05/ticket-logo-.003.jpg',
+                    subtitle: 'Địa bàn: ' + stop.Zone
+                    + '\nTuyến: ' + stop.Routes
+                    + '\nCách bạn: ' + getDistanceFromLatLonInKm(lat, long, stop.Lat, stop.Lng).toFixed(2) + ' (Km)'
+                    + '\nĐường: ' + stop.Street,
+                    buttons: [
+                        {
+                            type: "web_url",
+                            url: "https://sticket.herokuapp.com",
+                            title: "View Website"
+                        }
+                    ]
+                };
+                ele.push(info);
             }
-            console.log("The file was saved!");
-        });
-        request({
-            url: 'https://graph.facebook.com/v2.6/me/messages',
-            qs: {
-                access_token: 'EAATnBNPBOEgBAAZBDnJg1dv3vbKvFal6Em5LLFP7mvGInJsHjUwcODngcVa15oIhTLO6wPOauq1cIeYiWYghvOBiVRWIscou2cigeFi3JiIe4WG8C206CqxprXKfblHRSoT52JBUxPczrasAUGkev7ZAxYD3D9PFOP5U3gQgZDZD',
-            },
-            method: 'POST',
-            json: data
-        });
-        // res.send(data);
-        // sendMessage(senderId,'Các trạm dừng gần bạn');
+            data.message.attachment.payload.elements = ele;
+            console.log(data);
+            fs.writeFile("./fb.json", JSON.stringify(data), function (err) {
+                if (err) {
+                    return console.log(err);
+                }
+                console.log("The file was saved!");
+            });
+            request({
+                url: 'https://graph.facebook.com/v2.6/me/messages',
+                qs: {
+                    access_token: 'EAATnBNPBOEgBAAZBDnJg1dv3vbKvFal6Em5LLFP7mvGInJsHjUwcODngcVa15oIhTLO6wPOauq1cIeYiWYghvOBiVRWIscou2cigeFi3JiIe4WG8C206CqxprXKfblHRSoT52JBUxPczrasAUGkev7ZAxYD3D9PFOP5U3gQgZDZD',
+                },
+                method: 'POST',
+                json: data
+            });
+        }
     });
 }
 
-var URLBus =[];
-router.get('busURL', function (req, res) {
-   res.send(URLBus);
+var URLBus = [];
+router.get('/busURL', function (req, res) {
+    res.send(URLBus);
 });
 
 router.get('/bus', function (req, res) {
