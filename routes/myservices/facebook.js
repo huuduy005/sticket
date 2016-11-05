@@ -5,6 +5,7 @@ var fs = require('fs');
 var Tiki = require('./../util/tiki');
 
 var code_verify = 'hulo005';
+var access_token = 'EAATnBNPBOEgBAAZBDnJg1dv3vbKvFal6Em5LLFP7mvGInJsHjUwcODngcVa15oIhTLO6wPOauq1cIeYiWYghvOBiVRWIscou2cigeFi3JiIe4WG8C206CqxprXKfblHRSoT52JBUxPczrasAUGkev7ZAxYD3D9PFOP5U3gQgZDZD';
 //Facebook xác thực webhook
 router.get('/', function (req, res) {
     if (req.query['hub.verify_token'] === code_verify) {
@@ -204,6 +205,43 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
 
 function deg2rad(deg) {
     return deg * (Math.PI / 180)
+}
+
+function addPersistentMenu() {
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/thread_settings',
+        qs: {access_token: access_token},
+        method: 'POST',
+        json: {
+            setting_type: "call_to_actions",
+            thread_state: "existing_thread",
+            call_to_actions: [
+                {
+                    type: "postback",
+                    title: "Home",
+                    payload: "home"
+                },
+                {
+                    type: "postback",
+                    title: "Joke",
+                    payload: "joke"
+                },
+                {
+                    type: "web_url",
+                    title: "Ghé website của Bot",
+                    url: "https://sticket.herokuapp.com/"
+                }
+            ]
+        }
+
+    }, function (error, response, body) {
+        console.log(response)
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
 }
 
 module.exports = router;

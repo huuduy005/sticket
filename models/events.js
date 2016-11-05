@@ -5,6 +5,12 @@ var Schema = mongoose.Schema;
 var eventSchema = new Schema({
     id: Number,
     information: String,
+    title: String,
+    image: String,
+    price: Number,
+    date: Date,
+    location: String,
+    tags: Array,
     type: String
 });
 

@@ -18,6 +18,8 @@ var logout = require('./api/logout');
 router.get('/events', EventsController.getAll);
 router.get('/devices', DevicesController.getAll);
 router.get('/tickets', TicketsController.getAll);
+router.get('/tickets/:id', TicketsController.get);
+router.post('/tickets', TicketsController.create);
 router.get('/users', UsersController.getAll);
 router.post('/sign-up', UsersController.signup);
 router.post('/sign-in', UsersController.signin);

@@ -5,7 +5,12 @@ var Schema = mongoose.Schema;
 var ticketSchema = new Schema({
     id: Number,
     user: Number,
-    device: Number,
+    device: ObjectId,
+    event: ObjectId,
+    check_in: {
+        time: Date,
+        by: Number
+    },
     information: String
 });
 
