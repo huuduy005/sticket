@@ -147,7 +147,12 @@ function sendBusAround(senderId, lat, long) {
                         {
                             type: "web_url",
                             url: "https://sticket.herokuapp.com",
-                            title: "View Website"
+                            title: "Ghé website của Bot"
+                        },
+                        {
+                            type: 'web_url',
+                            url: 'https://www.google.com/maps/dir/' + lat + ',' + long + '/' + stop.Lat + ',' + stop.Lng,
+                            title: 'Xem trên bản đồ'
                         }
                     ]
                 };

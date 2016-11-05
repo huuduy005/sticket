@@ -104,8 +104,8 @@
       <file leaf-file-name="facebook.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/myservices/facebook.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="119" column="29" selection-start-line="119" selection-start-column="29" selection-end-line="119" selection-end-column="29" />
+            <state relative-caret-position="427">
+              <caret line="152" column="44" selection-start-line="152" selection-start-column="44" selection-end-line="152" selection-end-column="44" />
               <folding>
                 <element signature="e#4005#4358#0" expanded="false" />
               </folding>
@@ -459,7 +459,7 @@
       <workItem from="1477844810919" duration="591000" />
       <workItem from="1477929021886" duration="2203000" />
       <workItem from="1477987641277" duration="22046000" />
-      <workItem from="1478236840387" duration="19162000" />
+      <workItem from="1478236840387" duration="20306000" />
     </task>
     <task id="LOCAL-00001" summary="afsafsdf">
       <created>1477548446064</created>
@@ -629,11 +629,18 @@
       <option name="project" value="LOCAL" />
       <updated>1478290079200</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="add function location  + bus_infor facebook">
+      <created>1478317114333</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1478317114333</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="103394000" />
+    <option name="totallyTimeSpent" value="104538000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1073,8 +1080,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/myservices/facebook.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="119" column="29" selection-start-line="119" selection-start-column="29" selection-end-line="119" selection-end-column="29" />
+        <state relative-caret-position="427">
+          <caret line="152" column="44" selection-start-line="152" selection-start-column="44" selection-end-line="152" selection-end-column="44" />
           <folding>
             <element signature="e#4005#4358#0" expanded="false" />
           </folding>
