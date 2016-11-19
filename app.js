@@ -19,10 +19,10 @@ mongoose.Promise = global.Promise;
 // mongoose.connect('mongodb://huuduy005:HuuDuy005lk#@ds031607.mlab.com:31607/sticket')//'mongodb://localhost/HD')
 //     .then(() => console.log('Kết nối database thành công' + process.env.MONGOLAB_URI))
 //     .catch((err) => console.error(err));
-var db = mongoose.connect(config.database);
-db
-    .then(function () {
-        console.log('Kết nối thành công đến' + config.database);
+var db = mongoose.connect('mongodb://localhost/HD');
+//var db = mongoose.connect(config.database);
+db.then(function () {
+        console.log('Kết nối thành công đến database');
     })
     .catch(function (err) {
         console.error(err);

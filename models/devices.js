@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var deviceSchema = new Schema({
     id: Number,
     MAC: String,
-    user: ObjectId
+    user: Number
 });
 
 var Devices = mongoose.model('Devices', deviceSchema);

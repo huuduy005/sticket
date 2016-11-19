@@ -9,6 +9,7 @@ var UsersController = require('../controllers/users');
 var EventsController = require('../controllers/events');
 var DevicesController = require('../controllers/devices');
 var TicketsController = require('../controllers/tickets');
+var ChecksController = require('../controllers/checks');
 
 var secret = config.secret;
 
@@ -17,12 +18,21 @@ var logout = require('./api/logout');
 
 router.get('/events', EventsController.getAll);
 router.get('/devices', DevicesController.getAll);
+router.post('/devices', DevicesController.create);
+
+// Ticket
 router.get('/tickets', TicketsController.getAll);
 router.get('/tickets/:id', TicketsController.get);
 router.post('/tickets', TicketsController.create);
+router.put('/tickets/buy', TicketsController.buy);
+
+// User
 router.get('/users', UsersController.getAll);
 router.post('/sign-up', UsersController.signup);
 router.post('/sign-in', UsersController.signin);
+
+// Check QR
+router.post('/checks', ChecksController.checkQR);
 
 router.post('/authenticate', function (req, res) {
     User.findOne({
@@ -56,6 +66,7 @@ router.post('/authenticate', function (req, res) {
         }
     });
 });
+
 
 // route middleware to authenticate and check token
 router.use(function (req, res, next) {
