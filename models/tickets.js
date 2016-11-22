@@ -5,8 +5,8 @@ var Schema = mongoose.Schema;
 var ticketSchema = new Schema({
     id: Number,
     user: Number,
-    device: ObjectId,
-    event: ObjectId,
+    device: Schema.Types.ObjectId,
+    event: Schema.Types.ObjectId,
     check_in: {
         time: Date,
         by: Number

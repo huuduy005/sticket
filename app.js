@@ -8,7 +8,6 @@ var bodyParser = require('body-parser');
 var config = require('./config');
 var routes = require('./routes/index');
 var api = require('./routes/api');
-var my_services = require('./routes/myservices');
 
 /*Kết nối database*/
 // load mongoose package
@@ -19,7 +18,7 @@ mongoose.Promise = global.Promise;
 // mongoose.connect('mongodb://huuduy005:HuuDuy005lk#@ds031607.mlab.com:31607/sticket')//'mongodb://localhost/HD')
 //     .then(() => console.log('Kết nối database thành công' + process.env.MONGOLAB_URI))
 //     .catch((err) => console.error(err));
-var db = mongoose.connect(config.database);
+var db = mongoose.connect('mongodb://localhost/HD');//config.database);
 db
     .then(function () {
         console.log('Kết nối thành công đến' + config.database);
@@ -44,7 +43,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/api', api);
-app.use('/services', my_services);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

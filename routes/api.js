@@ -12,14 +12,19 @@ var TicketsController = require('../controllers/tickets');
 
 var secret = config.secret;
 
-var booking = require('./api/booking');
-var logout = require('./api/logout');
-
+/*Events*/
 router.get('/events', EventsController.getAll);
+/*Devices*/
 router.get('/devices', DevicesController.getAll);
+/*Tickets*/
 router.get('/tickets', TicketsController.getAll);
 router.get('/tickets/:id', TicketsController.get);
 router.post('/tickets', TicketsController.create);
+
+router.post('/tickets/rsa', TicketsController.check);
+router.post('/tickets/rsa/gen', TicketsController.GenRSA);
+router.post('/tickets/rsa/check', TicketsController.checkRSA);
+/*User*/
 router.get('/users', UsersController.getAll);
 router.post('/sign-up', UsersController.signup);
 router.post('/sign-in', UsersController.signin);
