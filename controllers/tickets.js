@@ -1,4 +1,5 @@
 var crypto = require('crypto');
+var constants = require('constants');
 var cryptico = require('cryptico');
 var NodeRSA = require('node-rsa');
 var path = require("path");
@@ -7,13 +8,20 @@ var Tickets = require('../models/tickets');
 
 var TicketsController = {};
 
-TicketsController.getAll = function (req, res, next) {
-    Tickets.find({}, function (err, tickets) {
+function ticket_generate_id() {
+    var id = '' + Date.now();
+    return new Buffer(id).toString('base64');;
+}
+
+//Lấy danh sách vé của một user
+TicketsController.getAll = function (req, res) {
+    Tickets.find({user: req.user.id}, function (err, tickets) {
         if (err) throw err;
         res.send(tickets);
     });
 };
 
+//Lấy thông tin chi tiết của một vé
 TicketsController.get = function (req, res) {
     Tickets.findOne({id: req.params.id}, function (err, ticket) {
         if (err) throw err;
@@ -37,13 +45,17 @@ TicketsController.create = function (req, res) {
     });
 };
 
+TicketsController.booking = function (req, res) {
+    res.send(ticket_generate_id());
+};
+
 TicketsController.check = function (req, res) {
     var text = 'a2welna6yzqh2odn';
-    var EncryptionResult = cryptico.encrypt(text, PublicKeyString);
+    var EncryptionResult = cryptico.encrypt(text, config.publickey);
     res.send({
         string: text,
         encrypt: EncryptionResult.cipher,
-        publickey: PublicKeyString
+        publickey: config.publickey
     });
 };
 
@@ -53,13 +65,19 @@ TicketsController.GenRSA = function (req, res) {
     var encrypted = encryptByRSA(text);
     res.send({
         plain: text,
-        encrypt: encrypted
+        encrypt: encrypted,
+        crypto: encryptStringWithRsaPublicKey(text)
     });
 };
 
 TicketsController.checkRSA = function (req, res) {
     var encrypted = req.body.code;
-    var DecryptionResult = decryptByRSA(encrypted);
+    console.log(encrypted);
+    var DecryptionResult = decryptStringWithRsaPrivateKey(encrypted);//decryptByRSA(encrypted);
+    console.log(DecryptionResult.length); // 11
+    console.log(DecryptionResult.replace('\0', '').length); // 10
+    console.log(DecryptionResult.replace(/\0/g, '').length); // 8
+    DecryptionResult = DecryptionResult.replace(/\0/g, '');
     res.send({
         encrypt: encrypted,
         decrypt: DecryptionResult
@@ -106,6 +124,7 @@ var encryptByRSA = function (plainText) {
 };
 
 var decryptByRSA = function (encrypted) {
+    // console.log(RSAKey);
     var decrypted = RSAKey.decrypt(encrypted, 'utf8');
     return decrypted;
 };
@@ -140,15 +159,24 @@ var generate_key_firsttime = function () {
 
 var encryptStringWithRsaPublicKey = function (toEncrypt) {
     var publicKey = config.publickey;
+    var options = {
+        key: publicKey,
+        padding: constants.RSA_NO_PADDING
+    };
     var buffer = new Buffer(toEncrypt);
-    var encrypted = crypto.publicEncrypt(publicKey, buffer);
+    var encrypted = crypto.publicEncrypt(options, buffer);
     return encrypted.toString("base64");
 };
 
 var decryptStringWithRsaPrivateKey = function (toDecrypt) {
     var privateKey = config.privatekey;
+    var options = {
+        key: privateKey,
+        padding: constants.RSA_NO_PADDING
+    };
     var buffer = new Buffer(toDecrypt, "base64");
-    var decrypted = crypto.privateDecrypt(privateKey, buffer);
+    var decrypted = crypto.privateDecrypt(options, buffer);
     return decrypted.toString("utf8");
 };
+
 module.exports = TicketsController;
