@@ -3,14 +3,14 @@ var Schema = mongoose.Schema;
 
 // TODO cần bổ sung thêm các trường thông tin
 var ticketSchema = new Schema({
-    id: Number,
-    user: Number,
-    /*device: Schema.Types.ObjectId,
-    event: Schema.Types.ObjectId,
+    idTicket: String,
+    idUser: Number,
+    device: String,
+    idEvent: String,
     check_in: {
         time: Date,
         by: Number
-    },*/
+    },
     information: String
 });
 

@@ -1,4 +1,4 @@
-var Devices = require('../models/devices');
+/*var Devices = require('../models/devices');
 var User = require('../models/users');
 var Ticket = require('../models/tickets');
 var jwt = require('jsonwebtoken');
@@ -8,6 +8,7 @@ var secret = config.secret;
 var CheckController = {};
 
 
+CheckController. = function (req, res)
 
 CheckController.checkQR = function (req, res) {
     console.log(req.body);
@@ -109,5 +110,5 @@ UsersController.signin = function (req, res) {
     });
 };
 
-*/
+
 module.exports = CheckController;

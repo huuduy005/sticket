@@ -3,15 +3,16 @@ var Schema = mongoose.Schema;
 
 // TODO cần bổ sung thêm các trường thông tin
 var eventSchema = new Schema({
-    id: Number,
+    idEvent: String,
     information: String,
     title: String,
     image: String,
     price: Number,
     date: Date,
     location: String,
-    tags: Array,
-    type: String
+    tags: [String],
+    type: String,
+    numberTicket: Number
 });
 
 var Events = mongoose.model('Events', eventSchema);

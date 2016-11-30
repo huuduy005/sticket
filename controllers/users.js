@@ -16,13 +16,13 @@ UsersController.getAll = function (req, res) {
 UsersController.signup = function (req, res) {
     console.log(req.body);
     Users.findOne({
-        id: req.body.id
+        idUser: req.body.idUser
     }, function (err, user) {
         if (err) throw err;
         if (!user) {
             // create a sample user
             var acc = new Users({
-                id: req.body.id,
+                idUser: req.body.idUser,
                 name: req.body.name,
                 password: req.body.password,
                 information: 'None',
@@ -43,7 +43,7 @@ UsersController.signup = function (req, res) {
 UsersController.signin = function (req, res) {
     console.log(req.body);
     Users.findOne({
-        id: req.body.id
+        idUser: req.body.idUser
     }, function (err, user) {
         if (err) throw err;
         if (!user) {
@@ -73,7 +73,5 @@ UsersController.signin = function (req, res) {
         }
     });
 };
-
-
 
 module.exports = UsersController;

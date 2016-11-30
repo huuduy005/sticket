@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 // TODO cần bổ sung thêm các trường thông tin
 var userSchema = new Schema({
-    id: Number,
+    idUser: Number,
     password: String,
     name: String,
     information: String,
