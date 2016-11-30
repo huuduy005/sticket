@@ -7,6 +7,7 @@ var UsersController = require('../controllers/users');
 var EventsController = require('../controllers/events');
 var DevicesController = require('../controllers/devices');
 var TicketsController = require('../controllers/tickets');
+var CheckController = require('../controllers/checks');
 
 var uncode = function (req, res, next) {
   res.send('Vẫn đang thực hiện: ' + req.originalUrl);
@@ -48,7 +49,13 @@ router.post('/events/create', EventsController.create);
 router.get('/tickets', TicketsController.getAll);
 router.get('/tickets/:id', TicketsController.get);
 router.post('/tickets', TicketsController.create);
+/*======================================================================================*/
 
+
+/*Check in -- out*/
+/*======================================================================================*/
+router.post('/checks', CheckController.Approve);
+/*======================================================================================*/
 
 
 /*Test - sử dụng RSA thay cho OTP*/

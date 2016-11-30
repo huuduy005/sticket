@@ -38,7 +38,9 @@ TicketsController.create = function (/*idTicket, */idEvent, idUser, infor) {
         device: null, 
         idEvent: idEvent,
         check_in: null,
-        information: infor
+        information: infor,
+        in: false, 
+        out: false
     });
     ticket.save(function (err) {
         if (err) throw err;

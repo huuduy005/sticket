@@ -7,10 +7,10 @@ var ticketSchema = new Schema({
     idUser: Number,
     device: String,
     idEvent: String,
-    check_in: {
-        time: Date,
-        by: Number
-    },
+    time: Date,
+    by: Number,
+    in: Boolean,
+    out: Boolean,
     information: String
 });
 
