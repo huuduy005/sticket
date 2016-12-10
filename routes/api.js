@@ -40,8 +40,7 @@ router.post('/users/update', uncode)
 /*======================================================================================*/
 router.get('/events', EventsController.getAll);
 router.get('/events?page=:id', EventsController.getByPage);
-router.get('/events/:id', EventsController.getDetail);
-router.post('/events/create', EventsController.create);
+router.get('/event/:idEvent', EventsController.getDetail);
 /*======================================================================================*/
 
 /*Tickets*/
@@ -68,7 +67,15 @@ router.post('/authenticate', TokensController.authenticate);
 // route middleware to authenticate and check token
 router.use(TokensController.middleware);
 
+// Create event must signin
+router.post('/events/create', EventsController.create);
+
 // Booking ticket of the event
-router.post('/events/booking', EventsController.BookingTicket);
+router.post('/event/booking', EventsController.bookingTicket);
+
+
+router.use(TokensController.checkAuthorizationEvent);
+// Update event
+router.post('/event/:idEvent', EventsController.updateEvents);
 
 module.exports = router;

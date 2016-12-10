@@ -1,9 +1,37 @@
 var Events = require('../models/events');
 var TicketsController = require('../controllers/tickets');
+var randomstring = require('randomstring');
 
 var EventsController = {};
 
 var numberEvent = 1;
+
+function checkExitEvent(Events, idEvent) {
+    Events.findOne({
+        idEvent: idEvent
+    }, function (err, event) {
+        if (err) {
+            next(new Error(err));
+        } else {
+            if (event) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    });
+}
+
+function generateIdEvent(Events) {
+    var idEvent = randomstring.generate(6);
+    while(checkExitEvent(Events, idEvent))
+    {
+        console.log(idEvent);
+        idEvent = randomstring.generate(6);
+    }
+
+    return idEvent;
+}
 
 EventsController.getAll = function (req, res) {
     Events.find({}, function (err, events) {
@@ -13,7 +41,7 @@ EventsController.getAll = function (req, res) {
 };
 
 
-EventsController.getDetail = function (req, res, next) {
+EventsController.getDetail = function (req, res) {
     var idEvent = req.params.idEvent;
     Events.findOne({
         idEvent: idEvent
@@ -38,17 +66,14 @@ EventsController.getByPage = function (req, res) {
     res.send(num_page);
 };
 
-EventsController.get = function (req, res) {
 
-};
 
 /*
     Create a event
 */
 EventsController.create = function (req, res) {
     // Generation id for event
-    var idEvent = numberEvent++;
-
+    var idEvent = generateIdEvent(Events);
     var event = new Events({
     idEvent: idEvent,
     information: req.body.information,
@@ -59,12 +84,13 @@ EventsController.create = function (req, res) {
     location: req.body.location,
     tags: [],
     type: req.body.type,
-    numberTicket: parseInt(req.body.numberTicket)
+    numberTicket: parseInt(req.body.numberTicket),
+    idAdmin: req.decoded._doc.idUser
     });
     event.save(function (err) {
         if (err) throw err;
         console.log('Event saved successfully');
-        res.send({status: 'OK', message: 'Tạo event thành công'});       
+        res.send({status: 'OK', message: 'Tạo event thành công'});
     });
     return Events;
 };
@@ -72,14 +98,14 @@ EventsController.create = function (req, res) {
 
 /*
     Buy ticket of the event
-    req: 
-    + IdEvent: 
+    req:
+    + IdEvent:
     + IdUser: Who buy it?
     res:
-    + 
+    +
 */
-
-EventsController.BookingTicket = function (req, res) {
+////////////////////////// Con luu list ticket
+EventsController.bookingTicket = function (req, res) {
     var idEvent = req.body.idEvent;
     Events.findOne({
         idEvent: idEvent
@@ -93,16 +119,11 @@ EventsController.BookingTicket = function (req, res) {
                 if(event.numberTicket > 0)
                 {
                     var idUser = parseInt(req.decoded._doc.idUser);
-                    var ticket = TicketsController.create(event.idEvent, idUser, event.information);                
+                    var ticket = TicketsController.create(event.idEvent, idUser, event.information);
 
                     // Update tags and numberTicket for event
-                    var tags = [];
-                    tags = event.tags;
-                    console.log(tags);
-                    event.tags.push(ticket.idTicket);
-                    console.log(event.tags);
-                    var numberTicket = event.numberTicket - 1;
-                    Events.update({_id: event._id}, {$set: {tags: event.tags}, $set: {numberTicket: numberTicket}}, function (err, numUpdated) {
+                    event.numberTicket = event.numberTicket - 1;
+                    Events.update({_id: event._id}, event, function (err, place) {
                         if(err)
                             next(new Error(err));
                     });
@@ -124,6 +145,22 @@ EventsController.BookingTicket = function (req, res) {
     });
 };
 
+/*
+    Update information of the event
+    + Object event
+*/
+EventsController.updateEvents = function (req, res) {
+  var event = new Events();
+  event = req.body.event;
+  Events.update({idEvent: event.idEvent}, event, function (err, place) {
+      if(err)
+          next(new Error(err));
+  });
+  res.json({
+      status: 'Success',
+      message: 'Chỉnh sửa event thành công'
+  });
+};
 
 
 module.exports = EventsController;

@@ -1,6 +1,7 @@
 var jwt = require('jsonwebtoken');
 var config = require('../config');
 var User = require('../models/users');
+var Events = require('../models/events');
 
 var secret = config.secret;
 
@@ -68,5 +69,34 @@ TokensUtil.middleware = function (req, res, next) {
         return res.redirect('/');
     }
 };
+
+
+TokensUtil.checkAuthorizationEvent = function (req, res, next) {
+    // check
+    var idEvent = req.body.event.idEvent;
+    Events.findOne({
+        idEvent: idEvent
+    }, function (err, event) {
+        if (err) {
+            next(new Error(err));
+        } else {
+            if (event) {
+                // Trường hợp này không xảy ra do idEvent gửi từ client lên chắn chắn sẽ có
+            } else {
+                // Kiểm tra phải là admin hay không
+                if(parseInt(event.idAdmin) === parseInt(req.body.decoded._doc.idUser)) {
+                  next();
+                } else {
+                  res.json({
+                      success: true,
+                      message: 'Bạn không phải là admin của event',
+                  });
+                }
+            }
+        }
+    });
+};
+
+
 
 module.exports = TokensUtil;

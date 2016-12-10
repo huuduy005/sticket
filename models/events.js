@@ -12,7 +12,8 @@ var eventSchema = new Schema({
     location: String,
     tags: [String],
     type: String,
-    numberTicket: Number
+    numberTicket: Number,
+    idAdmin: Number
 });
 
 var Events = mongoose.model('Events', eventSchema);

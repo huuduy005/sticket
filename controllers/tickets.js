@@ -8,10 +8,32 @@ var Tickets = require('../models/tickets');
 
 var TicketsController = {};
 
-function ticket_generate_id(idEvent) {
-    var id = '' + Date.now();
-    return idEvent + new Buffer(id).toString('base64');
+function checkExitTicket(Tickets, idEvent, idTicket) {
+    Events.findOne({
+        idEvent: idEvent,
+        idTicket: idTicket
+    }, function (err, ticket) {
+        if (err) {
+            next(new Error(err));
+        } else {
+            if (ticket) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    });
 }
+
+function generateIdTicket(Tickets, idEvent) {
+    var idTicket = idEvent + randomstring.generate(5, false, numeric);
+    while(checkExitEvent(Tickets, idEvent, idTicket))
+    {
+        idTicket = idEvent + randomstring.generate(5, false, numeric);
+    }
+    return idTicket;
+}
+
 
 //Lấy danh sách vé của một user
 TicketsController.getAll = function (req, res) {
@@ -31,21 +53,21 @@ TicketsController.get = function (req, res) {
 };
 
 TicketsController.create = function (/*idTicket, */idEvent, idUser, infor) {
-    var idTicket = ticket_generate_id(idEvent);
+    var idTicket = generateIdTicket(Tickets, idEvent);
     var ticket = new Tickets({
         idTicket: idTicket,
         idUser: idUser,
-        device: null, 
+        device: null,
         idEvent: idEvent,
         check_in: null,
         information: infor,
-        in: false, 
+        in: false,
         out: false
     });
     ticket.save(function (err) {
         if (err) throw err;
         console.log('Ticket saved successfully');
-        //res.send({status: 'OK', message: 'Tạo vé thành công'});       
+        //res.send({status: 'OK', message: 'Tạo vé thành công'});
     });
     return ticket;
 };
