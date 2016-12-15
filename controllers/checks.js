@@ -1,17 +1,87 @@
 var Tickets = require('../models/tickets');
 var jwt = require('jsonwebtoken');
-var config = require('../config');
-var secret = config.secret;
+//var config = require('../config');
+var cryptico = require('cryptico');
+var NodeRSA = require('node-rsa');
 
 var CheckController = {};
 
+var RSAKey = null;
+var config = {
+    publickey: '-----BEGIN PUBLIC KEY-----\n' +
+    'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQClv/9l3VHkyiHM3Of9dAnUX8d7\n' +
+    'xQk8s1AGuGorUIQ3v+MGMCgiGH16pb7UXCGK+6KkT1dlSl8UD01AtAHapjz1nbh1\n' +
+    'KSJ6kVyiFBDpJIpWgE0CY1ehQn/uxZVldItmA2+RDU3GAVic/vlpdKA4lHMTMEsE\n' +
+    'IjgodSihM4xLEWoW2wIDAQAB\n' +
+    '-----END PUBLIC KEY-----',
+    privatekey: '-----BEGIN PRIVATE KEY-----\n' +
+    'MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAKW//2XdUeTKIczc\n' +
+    '5/10CdRfx3vFCTyzUAa4aitQhDe/4wYwKCIYfXqlvtRcIYr7oqRPV2VKXxQPTUC0\n' +
+    'AdqmPPWduHUpInqRXKIUEOkkilaATQJjV6FCf+7FlWV0i2YDb5ENTcYBWJz++Wl0\n' +
+    'oDiUcxMwSwQiOCh1KKEzjEsRahbbAgMBAAECgYA7a9yc4T5Fvm1lq2CEDcCkYX37\n' +
+    'kkTgfQxYjG6Lfr8X2XQDOOp6Zrs9aAREz46668GAFG2pg4MYhu/UHXR4tZYuhNGT\n' +
+    'BZrkfg2565Wl1uBh2BteQ2MPRoz+jR+N8cEufAQmEjKMWUVxi+TPNEbJchlIjM21\n' +
+    'JgkNZtGF2osNWDRqWQJBAP5Xc2U7iZE+TmvKh7XqYAmVWW5WZl0rlwZwOPkGzdu7\n' +
+    'UDDzciWQXK6Af0/WYuROLNSzwsHvNY0euSJ2KsxGtRcCQQCm1KtCrWCK8PIMU3vZ\n' +
+    'W+jnY9Vh5/oaGHUkgkoo3vOlZ1O9WN9Zqkzfqa8LEC6RRJxfmQViyfDp8kFILWPd\n' +
+    'm47dAkEAw89h2OMQUxCr4VKoToZlb5taoZbE8h/4Ao3tXtM9M1ivMTCLhZ3xrKri\n' +
+    '2P1NX0VMQGkwnIvkJ4QqtfxRkLky+wJBAJYZOYzgGMBpUB0u73r8amvlMpLH+AmK\n' +
+    'f7q9TqO/FE94y6rMTweJZWjGbiryADPLGzYXovTi49JYl8usqvEziDECQAz4i7o1\n' +
+    'GIrs/TMxN++0UKIHrqQRrMbA8IcT+8Q1OACTb04tVCcwjsuvCII5qvgBZy28n+k6\n' +
+    '0L5pJUImIbXLzoE=\n' +
+    '-----END PRIVATE KEY-----'
+};
+
+init = function () {
+    RSAKey = new NodeRSA({b: 1024});
+
+    //RSAKey.importKey(config.publickey, 'public');
+    //RSAKey.importKey(config.privatekey, 'pkcs8-private');
+    console.log(RSAKey.exportKey('public'));
+    console.log(RSAKey.exportKey('pkcs8-private'));
+}
+init();
+
+var encryptByRSA = function (plainText) {
+    var encrypted = RSAKey.encrypt(plainText, 'base64');
+    return encrypted;
+};
+
+var decryptByRSA = function (encrypted) {
+    // console.log(RSAKey);
+    var decrypted = RSAKey.decrypt(encrypted, 'utf8');
+    return decrypted;
+};
+
+CheckController.check = function (req, res) {
+    var text = req.body.text;
+    var EncryptionResult = encryptByRSA(text);
+    res.send({
+        string: text,
+        encrypt: EncryptionResult,
+        publickey: config.publickey
+    });
+};
 
 
 /*
     Analyze to RSA, OPT, MAC, Time
 */
-var Analyze = function (req, res) {
-
+var sizeTicket = 10;
+var sizeOTP = 10;
+var sizeMAC = 12;
+var sizeTime = 10;
+var Analyze = function (str) {
+    // idTicket(10) - OTP(10) - MAC(12) - Time(1)
+    var decoded = decryptByRSA(str);
+    var result = {
+        idTicket: decoded.substr(0, sizeTicket),
+        OTP: decoded.substr(sizeTicket, sizeOTP),
+        MAC: decoded.substr(sizeTicket + sizeOTP, sizeMAC),
+        time: decoded.substr(sizeTicket + sizeOTP + sizeMAC, sizeTime)
+    }
+    console.log(result);
+    return result;
 }
 
 
@@ -34,15 +104,15 @@ var CreateOTP = function (idTicket, time) {
 */
 CheckController.Approve = function (req, res) {
     /*
-        TODO: 
+        TODO:
         + Từ req.body.code gọi Analyze để phân tích thành các thành phần RSA, OTP, MAC, Time
         + Giả mã RSA với key private => idTicket
     */
-
-    var idTicket = req.body.idTicket;
-    var MAC = req.body.MAC;
-    var OTP = req.body.OTP;
-    var time = req.body.time;
+    var result = Analyze(req.body.text);
+    var idTicket = result.idTicket;
+    var MAC = result.MAC;
+    var OTP = result.OTP;
+    var time = result.time;
     var trip = req.body.trip;
 
     // Find Mac
@@ -57,6 +127,8 @@ CheckController.Approve = function (req, res) {
             });
         } else {
             var OTPTicket = CreateOTP(ticket.idTicket, time);
+            console.log(OTPTicket);
+            console.log(OTP);
             if(OTP !== OTPTicket) {
                 res.json({
                     status: 'Fail',
@@ -67,7 +139,7 @@ CheckController.Approve = function (req, res) {
                 if(trip === 'true')
                 {
                     /* Vé đã được dùng*/
-                    if(ticket.in === true && ticket.out === false)
+                    if(ticket.in === true)
                     {
                         res.json({
                             status: 'Fail',
@@ -82,21 +154,12 @@ CheckController.Approve = function (req, res) {
                                 message: 'Vào lần hai sai MAC'
                             });
                         } else {
-                            console.log(ticket);
-                            console.log(MAC);
-                            /*
-                            Tickets.update({_id: ticket._id}, {$set: {device: MAC}, $set: {in: true}
-                                                                , $set: {check_in.time: time}, $set: {check_in.by: req.decoded._doc.idUser}}, function (err, numUpdated) {
-                                if(err)
-                                    next(new Error(err));
-                            });*/
                             ticket.device = MAC;
                             ticket.in = true;
                             Tickets.findOneAndUpdate({_id: ticket._id}, ticket, function (err, place) {
                                 if (err) next(new Error(err));
                             });
-                            console.log(ticket);
-                            
+
                             res.json({
                                 status: 'Success',
                                 message: 'Check in'
@@ -105,9 +168,9 @@ CheckController.Approve = function (req, res) {
                     }
                     /* Check đi ra*/
                 } else {
-                    if(ticket.in !== true)
+                    if(ticket.in === false)
                     {
-                        /* Trường hợp này dự trù tình huống bị tấn công*/
+                        /* Trường hợp này dự trù tình huống bị tấn công vao them ng*/
                         res.json({
                             status: 'Fail',
                             message: 'Vé chưa check đi vào nên không thể check đi ra'
@@ -115,15 +178,7 @@ CheckController.Approve = function (req, res) {
                     } else {
 
                         ticket.in = false;
-                        /*
-                        Tickets.update({_id: ticket._id}, {$set: {in: false}
-                                                            , $set: {check_in.time: time}, $set: {check_in.by: req.decoded._doc.idUser}}, function (err, numUpdated) {
-                            if(err)
-                            {
-                                console.log('err');
-                                next(new Error(err));
-                            }
-                        });*/
+
                         Tickets.findOneAndUpdate({_id: ticket._id}, ticket, function (err, place) {
                                 if (err) next(new Error(err));
                         });
@@ -132,11 +187,11 @@ CheckController.Approve = function (req, res) {
                             status: 'Success',
                             message: 'Check out'
                         });
-                    }  
+                    }
                 }
             }
         }
-            
+
     });
 };
 

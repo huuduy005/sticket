@@ -13,6 +13,8 @@ var uncode = function (req, res, next) {
   res.send('Vẫn đang thực hiện: ' + req.originalUrl);
 };
 
+
+
 /*Home api*/
 /*======================================================================================*/
 router.all('/', function (req, res, next) {
@@ -45,20 +47,15 @@ router.get('/event/:idEvent', EventsController.getDetail);
 
 /*Tickets*/
 /*======================================================================================*/
-router.get('/tickets', TicketsController.getAll);
-router.get('/tickets/:id', TicketsController.get);
+router.get('/tickets/:idUser', TicketsController.getAllTicketOfUser);
+router.get('/ticket/:idTicket', TicketsController.get);
 router.post('/tickets', TicketsController.create);
 /*======================================================================================*/
 
 
-/*Check in -- out*/
-/*======================================================================================*/
-router.post('/checks', CheckController.Approve);
-/*======================================================================================*/
-
 
 /*Test - sử dụng RSA thay cho OTP*/
-router.post('/tickets/rsa', TicketsController.check);
+router.post('/rsa', CheckController.check);
 router.post('/tickets/rsa/gen', TicketsController.GenRSA);
 router.post('/tickets/rsa/check', TicketsController.checkRSA);
 /*======================================================================================*/
@@ -73,8 +70,17 @@ router.post('/events/create', EventsController.create);
 // Booking ticket of the event
 router.post('/event/booking', EventsController.bookingTicket);
 
+//router.get('/events/booking', EventsController.getAllEventOfUser);
 
-router.use(TokensController.checkAuthorizationEvent);
+
+
+//router.use(TokensController.checkAuthorizationEvent);
+
+/*Check in -- out*/
+/*======================================================================================*/
+router.post('/checks', CheckController.Approve);
+/*======================================================================================*/
+
 // Update event
 router.post('/event/:idEvent', EventsController.updateEvents);
 

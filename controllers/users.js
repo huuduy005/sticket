@@ -2,6 +2,7 @@ var Users = require('../models/users');
 var jwt = require('jsonwebtoken');
 var config = require('../config');
 var bcrypt = require('bcryptjs');
+var strsplit = require('strsplit');
 var secret = config.secret;
 var rounds = 10; // Used create hash
 
@@ -25,7 +26,6 @@ var createHashPassword = function (password, result) {
 }
 
 UsersController.signup = function (req, res) {
-    console.log(req.body);
     Users.findOne({
         idUser: req.body.idUser
     }, function (err, user) {

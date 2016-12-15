@@ -4,12 +4,14 @@ var cryptico = require('cryptico');
 var NodeRSA = require('node-rsa');
 var path = require("path");
 var fs = require("fs");
+var randomstring = require('randomstring');
 var Tickets = require('../models/tickets');
 
 var TicketsController = {};
+var numberChar = 5;
 
 function checkExitTicket(Tickets, idEvent, idTicket) {
-    Events.findOne({
+    Tickets.findOne({
         idEvent: idEvent,
         idTicket: idTicket
     }, function (err, ticket) {
@@ -26,18 +28,18 @@ function checkExitTicket(Tickets, idEvent, idTicket) {
 }
 
 function generateIdTicket(Tickets, idEvent) {
-    var idTicket = idEvent + randomstring.generate(5, false, numeric);
-    while(checkExitEvent(Tickets, idEvent, idTicket))
+    var idTicket = idEvent + randomstring.generate( {length: 5, charset: 'numeric'});
+    while(checkExitTicket(Tickets, idEvent, idTicket))
     {
-        idTicket = idEvent + randomstring.generate(5, false, numeric);
+        idTicket = idEvent + randomstring.generate( {length: 5, charset: 'numeric'});
     }
     return idTicket;
 }
 
 
 //Lấy danh sách vé của một user
-TicketsController.getAll = function (req, res) {
-    Tickets.find({idUser: req.body.idUser}, function (err, tickets) {
+TicketsController.getAllTicketOfUser = function (req, res) {
+    Tickets.find({idUser: req.params.idUser}, function (err, tickets) {
         if (err) throw err;
         res.send(tickets);
     });
@@ -45,7 +47,7 @@ TicketsController.getAll = function (req, res) {
 
 //Lấy thông tin chi tiết của một vé
 TicketsController.get = function (req, res) {
-    Tickets.findOne({idTicket: req.body.idTicket}, function (err, ticket) {
+    Tickets.findOne({idTicket: req.params.idTicket}, function (err, ticket) {
         if (err) throw err;
         //ticket.check_in.by = 10;
         res.send(ticket);
@@ -133,15 +135,36 @@ var config = {
     '0L5pJUImIbXLzoE=\n' +
     '-----END PRIVATE KEY-----'
 };
-
 var RSAKey = null;
+var generate_key = function () {
+    // The passphrase used to repeatably generate this RSA key.
+    var PassPhrase = "The Moon is a Harsh Mistress.";
+    // The length of the RSA key, in bits.
+    var Bits = 2048;
+    RSAKey = cryptico.generateRSAKey(PassPhrase, Bits);
+    PublicKeyString = cryptico.publicKeyString(RSAKey);
+    console.log(PublicKeyString);
+    // fs.writeFile("./public.txt", PublicKeyString, function (err) {
+    //     if (err) return console.log(err);
+    //     console.log("The file was saved!");
+    // });
+
+    var PlainText = "a2welna6yzqh2odn";
+
+    var EncryptionResult = RSAKey.encrypt(PlainText);
+    var DecryptionResult = cryptico.decrypt(EncryptionResult.cipher, RSAKey);
+
+    console.log(DecryptionResult.plaintext);
+}
+
+
 var init = function () {
-    RSAKey = new NodeRSA();
-    RSAKey.importKey(config.publickey, 'public');
-    RSAKey.importKey(config.privatekey, 'pkcs8-private');
-    console.log('Init RSAKey done');
+    // RSAKey = new NodeRSA();
+    // console.log(RSAKey);
+    // RSAKey.importKey(config.publickey, 'public');
+    // RSAKey.importKey(config.privatekey, 'pkcs8-private');
+    // console.log('Init RSAKey done');
 };
-init();
 
 var encryptByRSA = function (plainText) {
     var encrypted = RSAKey.encrypt(plainText, 'base64');
@@ -154,26 +177,7 @@ var decryptByRSA = function (encrypted) {
     return decrypted;
 };
 
-var generate_key = function () {
-    // The passphrase used to repeatably generate this RSA key.
-    var PassPhrase = "The Moon is a Harsh Mistress.";
-    // The length of the RSA key, in bits.
-    var Bits = 1024;
-    RSAKey = cryptico.generateRSAKey(PassPhrase, Bits);
-    PublicKeyString = cryptico.publicKeyString(RSAKey);
 
-    // fs.writeFile("./public.txt", PublicKeyString, function (err) {
-    //     if (err) return console.log(err);
-    //     console.log("The file was saved!");
-    // });
-
-    var PlainText = "a2welna6yzqh2odn";
-
-    var EncryptionResult = cryptico.encrypt(PlainText, PublicKeyString);
-    var DecryptionResult = cryptico.decrypt(EncryptionResult.cipher, RSAKey);
-    console.log(EncryptionResult.cipher);
-    console.log(DecryptionResult.plaintext);
-}
 var generate_key_firsttime = function () {
     var Bits = 1024;
     RSAKey = new NodeRSA({b: Bits});

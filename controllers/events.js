@@ -4,7 +4,7 @@ var randomstring = require('randomstring');
 
 var EventsController = {};
 
-var numberEvent = 1;
+var numberChar = 5;
 
 function checkExitEvent(Events, idEvent) {
     Events.findOne({
@@ -23,13 +23,13 @@ function checkExitEvent(Events, idEvent) {
 }
 
 function generateIdEvent(Events) {
-    var idEvent = randomstring.generate(6);
+    var idEvent = randomstring.generate({length: numberChar, 
+                    charset: 'alphabetic', capitalization: 'uppercase'});
     while(checkExitEvent(Events, idEvent))
     {
-        console.log(idEvent);
-        idEvent = randomstring.generate(6);
+        idEvent = randomstring.generate({length: numberChar, 
+                    charset: 'alphabetic', capitalization: 'uppercase'});
     }
-
     return idEvent;
 }
 
@@ -40,6 +40,13 @@ EventsController.getAll = function (req, res) {
     });
 };
 
+
+EventsController.getAllEventOfUser = function (req, res) {
+    Events.find({idAdmin: req.params.idUser}, function (err, events) {
+        if (err) throw err;
+        res.json(events);
+    });
+};
 
 EventsController.getDetail = function (req, res) {
     var idEvent = req.params.idEvent;
@@ -114,7 +121,7 @@ EventsController.bookingTicket = function (req, res) {
             next(new Error(err));
         } else {
             if (event) {
-
+                console.log(event);
                 // Create ticket, and res
                 if(event.numberTicket > 0)
                 {
@@ -127,7 +134,6 @@ EventsController.bookingTicket = function (req, res) {
                         if(err)
                             next(new Error(err));
                     });
-                    //console.log(event);
                     res.json(ticket);
                 } else {
                     res.json({
@@ -150,12 +156,12 @@ EventsController.bookingTicket = function (req, res) {
     + Object event
 */
 EventsController.updateEvents = function (req, res) {
-  var event = new Events();
-  event = req.body.event;
-  Events.update({idEvent: event.idEvent}, event, function (err, place) {
-      if(err)
-          next(new Error(err));
-  });
+  // var event = new Events();
+  // event = req.body.event;
+  // Events.update({idEvent: event.idEvent}, event, function (err, place) {
+  //     if(err)
+  //         next(new Error(err));
+  // });
   res.json({
       status: 'Success',
       message: 'Chỉnh sửa event thành công'
