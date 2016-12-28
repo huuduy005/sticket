@@ -47,7 +47,6 @@ router.get('/event/:idEvent', EventsController.getDetail);
 
 /*Tickets*/
 /*======================================================================================*/
-router.get('/tickets/:idUser', TicketsController.getAllTicketOfUser);
 router.get('/ticket/:idTicket', TicketsController.get);
 router.post('/tickets', TicketsController.create);
 /*======================================================================================*/
@@ -66,11 +65,13 @@ router.use(TokensController.middleware);
 
 // Create event must signin
 router.post('/events/create', EventsController.create);
-
 // Booking ticket of the event
 router.post('/event/booking', EventsController.bookingTicket);
+// Get all event of the user
+router.get('/events/:idUser', EventsController.getAllEventOfUser);
+// Get all ticket of the user
+router.get('/tickets/:idUser', TicketsController.getAllTicketOfUser);
 
-//router.get('/events/booking', EventsController.getAllEventOfUser);
 
 
 
