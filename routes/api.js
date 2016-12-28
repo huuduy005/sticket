@@ -48,7 +48,6 @@ router.get('/event/:idEvent', EventsController.getDetail);
 /*Tickets*/
 /*======================================================================================*/
 router.get('/ticket/:idTicket', TicketsController.get);
-router.post('/tickets', TicketsController.create);
 /*======================================================================================*/
 
 
@@ -68,9 +67,9 @@ router.post('/events/create', EventsController.create);
 // Booking ticket of the event
 router.post('/event/booking', EventsController.bookingTicket);
 // Get all event of the user
-router.get('/events/:idUser', EventsController.getAllEventOfUser);
+router.get('/events/getEventOfUser', EventsController.getAllEventOfUser);
 // Get all ticket of the user
-router.get('/tickets/:idUser', TicketsController.getAllTicketOfUser);
+router.get('/tickets/getTicketOfUser', TicketsController.getAllTicketOfUser);
 
 
 

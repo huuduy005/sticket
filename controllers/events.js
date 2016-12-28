@@ -42,7 +42,7 @@ EventsController.getAll = function (req, res) {
 
 
 EventsController.getAllEventOfUser = function (req, res) {
-    Events.find({idAdmin: req.params.idUser}, function (err, events) {
+    Events.find({idAdmin: req.decoded._doc.idUser}, function (err, events) {
         if (err) throw err;
         res.json(events);
     });

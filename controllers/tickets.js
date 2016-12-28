@@ -39,7 +39,7 @@ function generateIdTicket(Tickets, idEvent) {
 
 //Lấy danh sách vé của một user
 TicketsController.getAllTicketOfUser = function (req, res) {
-    Tickets.find({idUser: req.params.idUser}, function (err, tickets) {
+    Tickets.find({idUser: req.decoded._doc.idUser}, function (err, tickets) {
         if (err) throw err;
         res.send(tickets);
     });

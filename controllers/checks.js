@@ -7,30 +7,6 @@ var NodeRSA = require('node-rsa');
 var CheckController = {};
 
 var RSAKey = null;
-var config = {
-    publickey: '-----BEGIN PUBLIC KEY-----\n' +
-    'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQClv/9l3VHkyiHM3Of9dAnUX8d7\n' +
-    'xQk8s1AGuGorUIQ3v+MGMCgiGH16pb7UXCGK+6KkT1dlSl8UD01AtAHapjz1nbh1\n' +
-    'KSJ6kVyiFBDpJIpWgE0CY1ehQn/uxZVldItmA2+RDU3GAVic/vlpdKA4lHMTMEsE\n' +
-    'IjgodSihM4xLEWoW2wIDAQAB\n' +
-    '-----END PUBLIC KEY-----',
-    privatekey: '-----BEGIN PRIVATE KEY-----\n' +
-    'MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAKW//2XdUeTKIczc\n' +
-    '5/10CdRfx3vFCTyzUAa4aitQhDe/4wYwKCIYfXqlvtRcIYr7oqRPV2VKXxQPTUC0\n' +
-    'AdqmPPWduHUpInqRXKIUEOkkilaATQJjV6FCf+7FlWV0i2YDb5ENTcYBWJz++Wl0\n' +
-    'oDiUcxMwSwQiOCh1KKEzjEsRahbbAgMBAAECgYA7a9yc4T5Fvm1lq2CEDcCkYX37\n' +
-    'kkTgfQxYjG6Lfr8X2XQDOOp6Zrs9aAREz46668GAFG2pg4MYhu/UHXR4tZYuhNGT\n' +
-    'BZrkfg2565Wl1uBh2BteQ2MPRoz+jR+N8cEufAQmEjKMWUVxi+TPNEbJchlIjM21\n' +
-    'JgkNZtGF2osNWDRqWQJBAP5Xc2U7iZE+TmvKh7XqYAmVWW5WZl0rlwZwOPkGzdu7\n' +
-    'UDDzciWQXK6Af0/WYuROLNSzwsHvNY0euSJ2KsxGtRcCQQCm1KtCrWCK8PIMU3vZ\n' +
-    'W+jnY9Vh5/oaGHUkgkoo3vOlZ1O9WN9Zqkzfqa8LEC6RRJxfmQViyfDp8kFILWPd\n' +
-    'm47dAkEAw89h2OMQUxCr4VKoToZlb5taoZbE8h/4Ao3tXtM9M1ivMTCLhZ3xrKri\n' +
-    '2P1NX0VMQGkwnIvkJ4QqtfxRkLky+wJBAJYZOYzgGMBpUB0u73r8amvlMpLH+AmK\n' +
-    'f7q9TqO/FE94y6rMTweJZWjGbiryADPLGzYXovTi49JYl8usqvEziDECQAz4i7o1\n' +
-    'GIrs/TMxN++0UKIHrqQRrMbA8IcT+8Q1OACTb04tVCcwjsuvCII5qvgBZy28n+k6\n' +
-    '0L5pJUImIbXLzoE=\n' +
-    '-----END PRIVATE KEY-----'
-};
 
 init = function () {
     RSAKey = new NodeRSA({b: 1024});
