@@ -159,12 +159,14 @@ var generate_key = function () {
 
 
 var init = function () {
-    // RSAKey = new NodeRSA();
-    // console.log(RSAKey);
-    // RSAKey.importKey(config.publickey, 'public');
-    // RSAKey.importKey(config.privatekey, 'pkcs8-private');
-    // console.log('Init RSAKey done');
+    RSAKey = new NodeRSA();
+    console.log(RSAKey);
+    RSAKey.importKey(config.publickey, 'public');
+    RSAKey.importKey(config.privatekey, 'pkcs8-private');
+    console.log('Init RSAKey done');
 };
+
+init();
 
 var encryptByRSA = function (plainText) {
     var encrypted = RSAKey.encrypt(plainText, 'base64');
