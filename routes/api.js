@@ -9,15 +9,15 @@ var DevicesController = require('../controllers/devices');
 var TicketsController = require('../controllers/tickets');
 var CheckController = require('../controllers/checks');
 
-var uncode = function (req, res, next) {
-  res.send('Vẫn đang thực hiện: ' + req.originalUrl);
+var uncode = function(req, res, next) {
+    res.send('Vẫn đang thực hiện: ' + req.originalUrl);
 };
 
 
 
 /*Home api*/
 /*======================================================================================*/
-router.all('/', function (req, res, next) {
+router.all('/', function(req, res, next) {
     res.send('API Home - ' + req.method);
 });
 /*======================================================================================*/
@@ -36,7 +36,7 @@ router.post('/sign-in', UsersController.signin);
 router.post('/change-password', uncode);
 router.post('/reset-password', uncode);
 router.post('/users/update', uncode)
-/*======================================================================================*/
+    /*======================================================================================*/
 
 /*Events*/
 /*======================================================================================*/
