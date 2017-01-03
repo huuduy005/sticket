@@ -1,0 +1,10 @@
+{
+    id_event: String,
+    title: String,
+    time: Date,
+    location: String,
+    price: Number,
+    image_cover: String,
+    type: String,
+    tags: [String]
+}

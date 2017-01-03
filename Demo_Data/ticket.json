@@ -1,0 +1,9 @@
+{
+    id_ticket: String,
+    id_user: String,
+    id_event: String,
+    id_device: String,
+    title: String,
+    time: Date,
+    location: String
+}

@@ -1,0 +1,23 @@
+/*Yêu cầu được chấp nhận*/
+{
+    status: "OK",
+    message: "Nội dung cần thông báo",
+    data: [
+        {
+            ticket1
+        },
+        {
+            ticket2
+        },
+        {
+            ticket3
+        }
+    ]
+}
+
+/*Yêu cầu fail*/
+{
+    status: "FAIL",
+    message: "Nội dung cần thông báo",
+    data: null
+}
