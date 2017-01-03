@@ -54,24 +54,38 @@ TicketsController.get = function (req, res) {
     })
 };
 
-TicketsController.create = function (/*idTicket, */idEvent, idUser, infor) {
-    var idTicket = generateIdTicket(Tickets, idEvent);
-    var ticket = new Tickets({
-        idTicket: idTicket,
-        idUser: idUser,
-        device: null,
+TicketsController.create = function (idEvent, idUser, infor, callback) {
+    var result = null;
+    // Check one ticket
+    Tickets.findOne({
         idEvent: idEvent,
-        check_in: null,
-        information: infor,
-        in: false,
-        out: false
-    });
-    ticket.save(function (err) {
+        idUser: idUser
+    }, function (err, tic) {
         if (err) throw err;
-        console.log('Ticket saved successfully');
-        //res.send({status: 'OK', message: 'Tạo vé thành công'});
+        console.log(tic);
+        if(tic == null) {
+            var idTicket = generateIdTicket(Tickets, idEvent);
+            var ticket = new Tickets({
+                idTicket: idTicket,
+                idUser: idUser,
+                device: null,
+                idEvent: idEvent,
+                check_in: null,
+                information: infor,
+                in: false,
+                out: false
+            });
+            ticket.save(function (err) {
+                if (err) throw err;
+                console.log('Ticket saved successfully');
+                //res.send({status: 'OK', message: 'Tạo vé thành công'});
+            });
+            result = ticket;
+            console.log('result');
+            console.log(result);
+        }
+        callback(result);
     });
-    return ticket;
 };
 
 

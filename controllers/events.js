@@ -23,11 +23,11 @@ function checkExitEvent(Events, idEvent) {
 }
 
 function generateIdEvent(Events) {
-    var idEvent = randomstring.generate({length: numberChar, 
+    var idEvent = randomstring.generate({length: numberChar,
                     charset: 'alphabetic', capitalization: 'uppercase'});
     while(checkExitEvent(Events, idEvent))
     {
-        idEvent = randomstring.generate({length: numberChar, 
+        idEvent = randomstring.generate({length: numberChar,
                     charset: 'alphabetic', capitalization: 'uppercase'});
     }
     return idEvent;
@@ -121,20 +121,30 @@ EventsController.bookingTicket = function (req, res) {
             next(new Error(err));
         } else {
             if (event) {
-                console.log(event);
+                //console.log(event);
                 // Create ticket, and res
                 if(event.numberTicket > 0)
                 {
                     var idUser = parseInt(req.decoded._doc.idUser);
-                    var ticket = TicketsController.create(event.idEvent, idUser, event.information);
-
-                    // Update tags and numberTicket for event
-                    event.numberTicket = event.numberTicket - 1;
-                    Events.update({_id: event._id}, event, function (err, place) {
-                        if(err)
-                            next(new Error(err));
+                    TicketsController.create(event.idEvent, idUser, event.information, function (ticket) {
+                        console.log('event');
+                        console.log(ticket);
+                        if(ticket == null) {
+                            res.json({
+                                status: 'Fail',
+                                message: 'Bạn đã có vé của sự kiện rồi'
+                            });
+                        }
+                        else {
+                            // Update tags and numberTicket for event
+                            event.numberTicket = event.numberTicket - 1;
+                            Events.update({_id: event._id}, event, function (err, place) {
+                                if(err)
+                                    next(new Error(err));
+                            });
+                            res.json(ticket);
+                        }
                     });
-                    res.json(ticket);
                 } else {
                     res.json({
                         status: 'Fail',

@@ -35,7 +35,7 @@ CheckController.check = function (req, res) {
     res.send({
         string: text,
         encrypt: EncryptionResult,
-        publickey: config.publickey
+        //publickey: config.publickey
     });
 };
 
