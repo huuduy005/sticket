@@ -155,7 +155,11 @@ EventsController.bookingTicket = function (req, res) {
                                 if (err)
                                     next(new Error(err));
                             });
-                            res.json(ticket);
+                            res.json({
+                                status: 'OK',
+                                message: 'OK',
+                                data: ticket
+                            });
                         }
                     });
                 } else {

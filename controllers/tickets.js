@@ -28,10 +28,9 @@ function checkExitTicket(Tickets, idEvent, idTicket) {
 }
 
 function generateIdTicket(Tickets, idEvent) {
-    var idTicket = idEvent + randomstring.generate( {length: 5, charset: 'numeric'});
-    while(checkExitTicket(Tickets, idEvent, idTicket))
-    {
-        idTicket = idEvent + randomstring.generate( {length: 5, charset: 'numeric'});
+    var idTicket = idEvent + randomstring.generate({length: 5, charset: 'numeric'});
+    while (checkExitTicket(Tickets, idEvent, idTicket)) {
+        idTicket = idEvent + randomstring.generate({length: 5, charset: 'numeric'});
     }
     return idTicket;
 }
@@ -41,7 +40,11 @@ function generateIdTicket(Tickets, idEvent) {
 TicketsController.getAllTicketOfUser = function (req, res) {
     Tickets.find({idUser: req.decoded._doc.idUser}, function (err, tickets) {
         if (err) throw err;
-        res.send(tickets);
+        res.json({
+            status: 'OK',
+            message: 'OK',
+            data: tickets
+        });
     });
 };
 
@@ -50,7 +53,11 @@ TicketsController.get = function (req, res) {
     Tickets.findOne({idTicket: req.params.idTicket}, function (err, ticket) {
         if (err) throw err;
         //ticket.check_in.by = 10;
-        res.send(ticket);
+        res.json({
+            status: 'OK',
+            message: 'OK',
+            data: ticket
+        });
     })
 };
 
@@ -63,7 +70,7 @@ TicketsController.create = function (idEvent, idUser, infor, callback) {
     }, function (err, tic) {
         if (err) throw err;
         console.log(tic);
-        if(tic == null) {
+        if (tic == null) {
             var idTicket = generateIdTicket(Tickets, idEvent);
             var ticket = new Tickets({
                 idTicket: idTicket,
@@ -87,7 +94,6 @@ TicketsController.create = function (idEvent, idUser, infor, callback) {
         callback(result);
     });
 };
-
 
 
 TicketsController.check = function (req, res) {
