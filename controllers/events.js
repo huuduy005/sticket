@@ -83,6 +83,33 @@ EventsController.getDetail = function (req, res) {
     });
 };
 
+EventsController.getContentEvent = function (req, res) {
+    var idEvent = req.params.idEvent;
+    Events.findOne({
+        idEvent: idEvent
+    }, function (err, event) {
+        if (err) {
+            next(new Error(err));
+        } else {
+            if (event) {
+                res.render('event_view',
+                    {
+                        link_image: event.image,
+                        title: event.title,
+                        time: event.time,
+                        text: event.information,
+                        content: 'London is the capital city of England. It is the most populous city in the United Kingdom, with a metropolitan area of over 13 million inhabitants Standing on the River Thames, London has been a major settlement for two millennia, its history going back to its founding by the Romans, who named it Londinium'
+                    });
+            } else {
+                res.json({
+                    status: 'Fail',
+                    message: 'Không tồn tại Events'
+                });
+            }
+        }
+    });
+};
+
 EventsController.getByPage = function (req, res) {
     var num_page = req.params.id;
     res.send(num_page);

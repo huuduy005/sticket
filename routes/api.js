@@ -43,6 +43,7 @@ router.post('/users/update', uncode)
 router.get('/events', EventsController.getAll);
 router.get('/events?page=:id', EventsController.getByPage);
 router.get('/event/:idEvent', EventsController.getDetail);
+router.get('/event/:idEvent/content', EventsController.getContentEvent);
 /*======================================================================================*/
 
 /*Tickets*/
