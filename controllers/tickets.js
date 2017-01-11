@@ -180,10 +180,10 @@ var generate_key = function () {
 
 var init = function () {
     RSAKey = new NodeRSA();
-    console.log(RSAKey);
+    // console.log(RSAKey);
     RSAKey.importKey(config.publickey, 'public');
     RSAKey.importKey(config.privatekey, 'pkcs8-private');
-    console.log('Init RSAKey done');
+    // console.log('Init RSAKey done');
 };
 
 init();

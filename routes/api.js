@@ -57,6 +57,7 @@ router.get('/ticket/:idTicket', TicketsController.get);
 router.post('/rsa', CheckController.check);
 router.post('/tickets/rsa/gen', TicketsController.GenRSA);
 router.post('/tickets/rsa/check', TicketsController.checkRSA);
+router.post('/check-in', CheckController.check_in);
 /*======================================================================================*/
 
 router.post('/authenticate', TokensController.authenticate);
