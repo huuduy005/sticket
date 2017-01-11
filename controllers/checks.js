@@ -243,6 +243,7 @@ decodeRSA = function (code) {
 
 CheckController.check_in = function (req, res) {
     console.log('Begin');
+    console.log(req.body.code);
     var IsCheckIn;
     if (req.body.checkCode === "true")
         IsCheckIn = true;

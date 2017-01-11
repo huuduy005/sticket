@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2d0b653-6109-4078-a13e-3fb6f609bca7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/TOTP.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/checks.js" afterPath="$PROJECT_DIR$/controllers/checks.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/tickets.js" afterPath="$PROJECT_DIR$/controllers/tickets.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/api.js" afterPath="$PROJECT_DIR$/routes/api.js" />
     </list>
     <ignored path="Server_Movies.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -82,8 +77,8 @@
           <file leaf-file-name="checks.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/controllers/checks.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="743">
-                  <caret line="309" column="71" lean-forward="false" selection-start-line="309" selection-start-column="71" selection-end-line="309" selection-end-column="71" />
+                <state relative-caret-position="63">
+                  <caret line="245" column="31" lean-forward="false" selection-start-line="245" selection-start-column="31" selection-end-line="245" selection-end-column="31" />
                   <folding>
                     <element signature="e#5140#6567#0" expanded="false" />
                     <element signature="e#6628#7057#0" expanded="false" />
@@ -513,7 +508,7 @@
       <workItem from="1483620452679" duration="2773000" />
       <workItem from="1483672513308" duration="12450000" />
       <workItem from="1484075816579" duration="751000" />
-      <workItem from="1484104382191" duration="6097000" />
+      <workItem from="1484104382191" duration="6448000" />
     </task>
     <task id="LOCAL-00001" summary="afsafsdf">
       <created>1477548446064</created>
@@ -708,7 +703,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="217108000" />
+    <option name="totallyTimeSpent" value="217459000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -959,8 +954,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/checks.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="743">
-          <caret line="309" column="71" lean-forward="false" selection-start-line="309" selection-start-column="71" selection-end-line="309" selection-end-column="71" />
+        <state relative-caret-position="63">
+          <caret line="245" column="31" lean-forward="false" selection-start-line="245" selection-start-column="31" selection-end-line="245" selection-end-column="31" />
           <folding>
             <element signature="e#5140#6567#0" expanded="false" />
             <element signature="e#6628#7057#0" expanded="false" />
