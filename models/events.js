@@ -6,6 +6,7 @@ var eventSchema = new Schema({
     idEvent: String,
     information: String,
     title: String,
+    time: String,
     image: String,
     price: Number,
     date: Date,

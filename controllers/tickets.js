@@ -6,6 +6,7 @@ var path = require("path");
 var fs = require("fs");
 var randomstring = require('randomstring');
 var Tickets = require('../models/tickets');
+var Events = require('../models/events');
 
 
 var TicketsController = {};
@@ -41,11 +42,31 @@ function generateIdTicket(Tickets, idEvent) {
 TicketsController.getAllTicketOfUser = function (req, res) {
     Tickets.find({idUser: req.decoded._doc.idUser}, function (err, tickets) {
         if (err) throw err;
-        res.json({
-            status: 'OK',
-            message: 'OK',
-            data: tickets
-        });
+        else {
+            var len = tickets.length;
+            var curIdx = 0;
+            var newTickets = [];
+            tickets.forEach(function (ticket) {
+                Events.findOne({ idEvent: ticket.idEvent}, function (err, event) {
+                    if (err) throw err;
+                    else {
+                        console.log(event.time);
+                        ticket.set('time', event.time, {strict: false});
+                        ticket.set('title', event.title, {strict: false});
+                        ticket.set('location', event.location, {strict: false});
+                        newTickets.push(ticket);
+                        ++curIdx;
+                        if (curIdx == len){
+                            res.json({
+                                status: 'OK',
+                                message: 'OK',
+                                data: newTickets
+                            });
+                        }
+                    }
+                });
+            });
+        }
     });
 };
 

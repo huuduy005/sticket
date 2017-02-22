@@ -7,7 +7,6 @@ var ticketSchema = new Schema({
     idUser: Number,
     device: String,
     idEvent: String,
-    time: Date,
     by: Number,
     in: Boolean,
     out: Boolean,
