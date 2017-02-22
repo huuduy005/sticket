@@ -182,6 +182,9 @@ EventsController.bookingTicket = function (req, res) {
                                 if (err)
                                     next(new Error(err));
                             });
+                            ticket.set('time', event.time, {strict: false});
+                            ticket.set('title', event.title, {strict: false});
+                            ticket.set('location', event.location, {strict: false});
                             res.json({
                                 status: 'OK',
                                 message: 'OK',
