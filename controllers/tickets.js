@@ -7,6 +7,7 @@ var fs = require("fs");
 var randomstring = require('randomstring');
 var Tickets = require('../models/tickets');
 
+
 var TicketsController = {};
 var numberChar = 5;
 
@@ -106,6 +107,11 @@ TicketsController.check = function (req, res) {
     });
 };
 
+TicketsController.hash = function (req, res) {
+    var name = 'NMBQO50832';
+    var code = crypto.createHash('sha1').update(name).digest('hex');
+    res.send({hash: code});
+};
 
 TicketsController.GenRSA = function (req, res) {
     var text = "a2welna6yzqh2odn";

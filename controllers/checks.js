@@ -294,8 +294,7 @@ CheckController.check_in = function (req, res) {
                                 status: 'FAIL',
                                 message: 'Thiết bị xác thực không đúng với quá trình đăng kí.'
                             });
-                        }
-                        if (ticket.in === true) {
+                        } else if (ticket.in === true) {
                             res.json({
                                 status: "VERIFIED",
                                 message: "Mã vé đã được check in"

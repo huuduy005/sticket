@@ -49,6 +49,7 @@ router.get('/event/:idEvent/content', EventsController.getContentEvent);
 /*Tickets*/
 /*======================================================================================*/
 router.get('/ticket/:idTicket', TicketsController.get);
+router.get('/hash', TicketsController.hash);
 /*======================================================================================*/
 
 
