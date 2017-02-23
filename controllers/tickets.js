@@ -42,8 +42,15 @@ TicketsController.getAllTicketOfUser = function (req, res) {
             var len = tickets.length;
             var curIdx = 0;
             var newTickets = [];
+            if (len === 0) {
+                res.json({
+                    status: 'OK',
+                    message: 'Tài khoản chưa có vé nào.',
+                    data: newTickets
+                });
+            }
             tickets.forEach(function (ticket) {
-                Events.findOne({ idEvent: ticket.idEvent}, function (err, event) {
+                Events.findOne({idEvent: ticket.idEvent}, function (err, event) {
                     if (err) throw err;
                     else {
                         console.log(event.time);
@@ -52,10 +59,10 @@ TicketsController.getAllTicketOfUser = function (req, res) {
                         ticket.set('location', event.location, {strict: false});
                         newTickets.push(ticket);
                         ++curIdx;
-                        if (curIdx == len){
+                        if (curIdx == len) {
                             res.json({
                                 status: 'OK',
-                                message: 'OK',
+                                message: 'Danh sách vé.',
                                 data: newTickets
                             });
                         }

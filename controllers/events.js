@@ -40,7 +40,7 @@ EventsController.getAll = function (req, res) {
         if (err) throw err;
         res.json({
             status: 'OK',
-            message: 'OK',
+            message: 'Danh sách sự kiện.',
             data: events
         });
     });
@@ -52,7 +52,7 @@ EventsController.getAllEventOfUser = function (req, res) {
         if (err) throw err;
         res.json({
             status: 'OK',
-            message: 'OK',
+            message: 'Danh sách sự kiện của tài khoản ' + req.decoded._doc.idUser,
             data: events
         });
     });
@@ -69,13 +69,13 @@ EventsController.getDetail = function (req, res) {
             if (event) {
                 res.json({
                     status: 'OK',
-                    message: 'OK',
+                    message: 'Thông tin một sự kiện.',
                     data: event
                 });
             } else {
                 res.json({
                     status: 'Fail',
-                    message: 'Không tồn tại Events'
+                    message: 'Không tồn tại Events.'
                 });
             }
         }
@@ -101,8 +101,8 @@ EventsController.getContentEvent = function (req, res) {
                     });
             } else {
                 res.json({
-                    status: 'Fail',
-                    message: 'Không tồn tại Events'
+                    status: 'FAIL',
+                    message: 'Không tồn tại Events.'
                 });
             }
         }
@@ -131,7 +131,10 @@ EventsController.create = function (req, res) {
     event.save(function (err) {
         if (err) throw err;
         console.log('Event saved successfully');
-        res.send({status: 'OK', message: 'Tạo event thành công'});
+        res.json({
+            status: 'OK',
+            message: 'Tạo sự kiện thành công.'
+        });
     });
     return Events;
 };
@@ -164,8 +167,8 @@ EventsController.bookingTicket = function (req, res) {
                         console.log(ticket);
                         if (ticket == null) {
                             res.json({
-                                status: 'Fail',
-                                message: 'Bạn đã có vé của sự kiện rồi'
+                                status: 'FAIL',
+                                message: 'Bạn đã có vé của sự kiện rồi.'
                             });
                         }
                         else {
@@ -180,21 +183,21 @@ EventsController.bookingTicket = function (req, res) {
                             ticket.set('location', event.location, {strict: false});
                             res.json({
                                 status: 'OK',
-                                message: 'OK',
+                                message: 'Bạn đã đăng kí vé thành công.',
                                 data: ticket
                             });
                         }
                     });
                 } else {
                     res.json({
-                        status: 'Fail',
-                        message: 'Không thành công, do hết vé'
+                        status: 'FAIL',
+                        message: 'Không thành công, do hết vé.'
                     });
                 }
             } else {
                 res.json({
-                    status: 'Fail',
-                    message: 'Không tòn tại Events'
+                    status: 'FAIL',
+                    message: 'Không tồn tại sự kiện.'
                 });
             }
         }
