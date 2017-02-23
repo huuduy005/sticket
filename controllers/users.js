@@ -74,7 +74,7 @@ UsersController.signin = function (req, res) {
                 } else {
                     // if user is found and password is right, create a token
                     var token = jwt.sign(user, secret, {
-                        expiresIn: 86400 // expires in 24 hours
+                        expiresIn: '7d' // expires in 24 hours
                     });
                     res.json({
                         status: 'OK',
