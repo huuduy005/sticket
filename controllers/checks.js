@@ -126,22 +126,22 @@ CheckController.check_in = function (req, res) {
                         ticket.in = true;
                         ticket.save(function (err) {
                             if (err) throw err;
-                            console.log('Mã vé check-in thành công');
+                            console.log('Mã vé check-in thành công.');
                             res.json({
                                 status: 'SUCCESS',
-                                message: 'Mã vé Check in thành công'
+                                message: 'Mã vé Check in thành công.'
                             });
                         });
                     } else {/*Đã check-in*/
                         if (ticket.device !== result.MAC) {
                             res.json({
                                 status: 'FAIL',
-                                message: 'Thiết bị xác thực không đúng với quá trình đăng kí.'
+                                message: 'Thiết bị xác thực không đúng với quá trình check-in trước.'
                             });
                         } else if (ticket.in === true) {
                             res.json({
                                 status: "VERIFIED",
-                                message: "Mã vé đã được check in"
+                                message: "Mã vé đã được check-in."
                             });
                         } else if (ticket.out === true) {
                             ticket.in = true;
@@ -151,13 +151,13 @@ CheckController.check_in = function (req, res) {
                                 console.log('Mã vé xác thực vào hợp lệ (đã check-in)');
                                 res.json({
                                     status: 'SUCCESS',
-                                    message: 'Mã vé hợp lệ (đã check-in)'
+                                    message: 'Mã vé hợp lệ (đã check-in).'
                                 });
                             });
                         } else {
                             res.json({
                                 status: 'FAIL',
-                                message: 'Logic có vấn đề'
+                                message: 'Lỗi vé chưa được check-in nhưng đã tồn tại thiết bị đi kèm.'
                             });
                         }
                     }
@@ -179,13 +179,18 @@ CheckController.check_in = function (req, res) {
                                 console.log('Mã vé check-out thành công');
                                 res.json({
                                     status: "SUCCESS",
-                                    message: "Mã vé đã xác nhận việc ra ngoài sự kiện."
+                                    message: "Mã vé xác nhận việc ra ngoài sự kiện thành công."
                                 });
+                            });
+                        } else if (ticket.out === true && ticket.in === false) {
+                            res.json({
+                                status: "VERIFIED",
+                                message: "Mã vé đã xác nhận việc ngoài sự kiện."
                             });
                         } else {
                             res.json({
                                 status: "FAIL",
-                                message: "Không đúng logic."
+                                message: "Phát sinh lỗi khi vé xác nhận việc ra ngoài sự kiện."
                             });
                         }
                     }
@@ -193,7 +198,7 @@ CheckController.check_in = function (req, res) {
             } else {
                 res.json({
                     status: "FAIL",
-                    message: "Mã vé không tồn tại"
+                    message: "Mã vé không tồn tại."
                 });
             }
         });
