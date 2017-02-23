@@ -51,9 +51,4 @@ router.get('/tickets/getTicketOfUser', TicketsController.getAllTicketOfUser);
 
 //router.use(TokensController.checkAuthorizationEvent);
 
-/*Check in -- out*/
-/*======================================================================================*/
-router.post('/checks', CheckController.Approve);
-/*======================================================================================*/
-
 module.exports = router;
