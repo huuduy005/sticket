@@ -14,11 +14,6 @@ var api = require('./routes/api');
 var mongoose = require('mongoose');
 // Use native Node promises
 mongoose.Promise = global.Promise;
-// connect to MongoDB
-// mongoose.connect('mongodb://huuduy005:HuuDuy005lk#@ds031607.mlab.com:31607/sticket')//'mongodb://localhost/HD')
-//     .then(() => console.log('Kết nối database thành công' + process.env.MONGOLAB_URI))
-//     .catch((err) => console.error(err));
-//var db = mongoose.connect('mongodb://localhost/HD');//config.database);
 var db = mongoose.connect(config.database);
 db
     .then(function () {

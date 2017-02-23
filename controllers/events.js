@@ -3,7 +3,6 @@ var TicketsController = require('../controllers/tickets');
 var randomstring = require('randomstring');
 
 var EventsController = {};
-
 var numberChar = 5;
 
 function checkExitEvent(Events, idEvent) {
@@ -110,12 +109,6 @@ EventsController.getContentEvent = function (req, res) {
     });
 };
 
-EventsController.getByPage = function (req, res) {
-    var num_page = req.params.id;
-    res.send(num_page);
-};
-
-
 /*
  Create a event
  */
@@ -205,23 +198,6 @@ EventsController.bookingTicket = function (req, res) {
                 });
             }
         }
-    });
-};
-
-/*
- Update information of the event
- + Object event
- */
-EventsController.updateEvents = function (req, res) {
-    // var event = new Events();
-    // event = req.body.event;
-    // Events.update({idEvent: event.idEvent}, event, function (err, place) {
-    //     if(err)
-    //         next(new Error(err));
-    // });
-    res.json({
-        status: 'Success',
-        message: 'Chỉnh sửa event thành công'
     });
 };
 

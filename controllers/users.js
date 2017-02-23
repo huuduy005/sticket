@@ -2,7 +2,7 @@ var Users = require('../models/users');
 var jwt = require('jsonwebtoken');
 var config = require('../config');
 var bcrypt = require('bcryptjs');
-//var strsplit = require('strsplit');
+
 var secret = config.secret;
 var rounds = 10; // Used create hash
 
@@ -15,15 +15,6 @@ UsersController.getAll = function (req, res) {
         res.send(users);
     });
 };
-
-var createHashPassword = function (password, result) {
-    bcrypt.genSalt(rounds, function (err, salt) {
-        if (err) throw err;
-        bcrypt.hash(password, salt, function (err, hash) {
-            result = hash;
-        });
-    });
-}
 
 UsersController.signup = function (req, res) {
     Users.findOne({
@@ -40,6 +31,7 @@ UsersController.signup = function (req, res) {
                         idUser: req.body.idUser,
                         name: req.body.name,
                         password: password,
+                        email: req.body.email,
                         information: 'None',
                         admin: false
                     });
