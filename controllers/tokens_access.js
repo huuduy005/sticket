@@ -7,39 +7,6 @@ var secret = config.secret;
 
 var TokensUtil = {};
 
-TokensUtil.authenticate = function (req, res) {
-    User.findOne({
-        name: req.body.name
-    }, function (err, user) {
-        if (err) throw err;
-        if (!user) {
-            res.json({
-                success: false,
-                message: 'Authentication failed. User not found.'
-            });
-        } else if (user) {
-            // check if password matches
-            if (user.password != req.body.password) {
-                console.log(user.password);
-                res.json({
-                    success: false,
-                    message: 'Authentication failed. Wrong password.'
-                });
-            } else {
-                // if user is found and password is right, create a token
-                var token = jwt.sign(user, secret, {
-                    expiresIn: 2592000 // expires in 24 hours
-                });
-                res.json({
-                    success: true,
-                    message: 'Enjoy your token!',
-                    token: token
-                });
-            }
-        }
-    });
-};
-
 // route middleware to authenticate and check token
 TokensUtil.middleware = function (req, res, next) {
     // check header or url parameters or post parameters for token
@@ -50,8 +17,8 @@ TokensUtil.middleware = function (req, res, next) {
         jwt.verify(token, secret, function (err, decoded) {
             if (err) {
                 return res.json({
-                    success: false,
-                    message: 'Failed to authenticate token.'
+                    status: 'FAIL',
+                    message: 'Mã xác thực truy cập sai.'
                 });
             } else {
                 // if everything is good, save to request for use in other routes
@@ -62,11 +29,10 @@ TokensUtil.middleware = function (req, res, next) {
         });
     } else {
         // if there is no token return an error
-        // return res.status(403).send({
-        //     success: false,
-        //     message: 'No token provided.'
-        // });
-        return res.redirect('/');
+        return res.status(403).send({
+            status: 'FAIL',
+            message: 'Không có quyền truy cập.'
+        });
     }
 };
 
@@ -88,8 +54,8 @@ TokensUtil.checkAuthorizationEvent = function (req, res, next) {
                   next();
                 } else {
                   res.json({
-                      success: true,
-                      message: 'Bạn không phải là admin của event',
+                      status: 'FAIL',
+                      message: 'Bạn không phải là người tổ chức event.'
                   });
                 }
             }

@@ -77,6 +77,14 @@ var decodeRSA = function (code) {
     return result;
 };
 
+CheckController.get_public_key = function (req, res) {
+    res.json({
+        status: "INVALID",
+        message: "Mã xác thực cung cấp không hợp lệ!",
+        publickey: config.publickey
+    });
+};
+
 CheckController.check_in = function (req, res) {
     console.log('Begin');
     console.log(req.body.code);

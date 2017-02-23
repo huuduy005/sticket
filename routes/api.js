@@ -28,6 +28,7 @@ router.get('/event/:idEvent', EventsController.getDetail);
 router.get('/event/:idEvent/content', EventsController.getContentEvent);
 /*======================================================================================*/
 
+router.get('/public-key', CheckController.get_public_key);
 router.post('/check-in', CheckController.check_in);
 /*======================================================================================*/
 
@@ -35,7 +36,7 @@ router.post('/check-in', CheckController.check_in);
 router.use(TokensController.middleware);
 
 // Create event must signin
-router.post('/events/create', EventsController.create);
+router.post('/event/create', EventsController.create);
 // Booking ticket of the event
 router.post('/event/booking', EventsController.bookingTicket);
 // Get all event of the user
@@ -48,7 +49,5 @@ router.get('/ticket/:idTicket', TicketsController.getATicket);
 // Get all ticket of the user
 router.get('/tickets/getTicketOfUser', TicketsController.getAllTicketOfUser);
 /*======================================================================================*/
-
-//router.use(TokensController.checkAuthorizationEvent);
 
 module.exports = router;

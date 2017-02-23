@@ -59,7 +59,7 @@ UsersController.signin = function (req, res) {
         if (err) throw err;
         if (!user) {
             res.json({
-                status: 'Fail',
+                status: 'FAIL',
                 message: 'Tài khoản đăng nhập không tồn tại'
             });
         } else if (user) {
@@ -68,8 +68,8 @@ UsersController.signin = function (req, res) {
                 if (!flag) {
                     console.log(user.password);
                     res.json({
-                        status: 'Fail',
-                        message: 'Mật khẩu sai'
+                        status: 'FAIL',
+                        message: 'Mật khẩu sai.'
                     });
                 } else {
                     // if user is found and password is right, create a token
@@ -78,7 +78,7 @@ UsersController.signin = function (req, res) {
                     });
                     res.json({
                         status: 'OK',
-                        message: 'Đăng nhập thành công',
+                        message: 'Đăng nhập thành công.',
                         token: token
                     });
                 }
