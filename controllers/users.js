@@ -46,7 +46,10 @@ UsersController.signup = function (req, res) {
 
         } else {
             console.log(user);
-            res.send({status: 'FAIL', message: 'Tên tài khoản đã tồn tại'});
+            res.json({
+                status: 'FAIL',
+                message: 'Tên tài khoản đã tồn tại'
+            });
         }
     });
 };

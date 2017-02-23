@@ -97,7 +97,7 @@ EventsController.getContentEvent = function (req, res) {
                         title: event.title,
                         time: event.time,
                         text: event.information,
-                        content: 'London is the capital city of England. It is the most populous city in the United Kingdom, with a metropolitan area of over 13 million inhabitants Standing on the River Thames, London has been a major settlement for two millennia, its history going back to its founding by the Romans, who named it Londinium'
+                        location: event.location
                     });
             } else {
                 res.json({
